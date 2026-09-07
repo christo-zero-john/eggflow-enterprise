@@ -1,3 +1,18 @@
+/**
+ * When the pinned story layout is active.
+ *
+ * MUST stay identical to the media query in src/app/globals.css that sets
+ * `.story-track { height }` and `.story-stage { position: sticky }`. If the two
+ * disagree, the component renders a pinned sequence into a layout that is not
+ * pinned, and the whole story collapses into a single viewport.
+ *
+ * Width is deliberately not part of this: the sequence is the clearest way to
+ * explain the product and phones benefit from it most. Only genuinely short
+ * viewports (landscape phones) fall back to the stacked version, because a
+ * pinned full-height stage has nowhere to put the copy there.
+ */
+export const STORY_PINNED_QUERY = "(min-height: 560px)";
+
 export type StoryState = {
   active: 0 | 1 | 2;
   opacity: [number, number, number];

@@ -111,6 +111,30 @@ html {
 
 .story-media {
   max-height: min(550px, calc(100dvh - 176px));
+  max-width: min(550px, calc(100dvh - 176px));
+}
+
+/*
+ * Phone layout for the pinned story: the picture leads, the copy sits under
+ * it, and everything is sized so a full step fits one screen without scrolling
+ * inside the pinned stage.
+ */
+@media (max-width: 1023px) {
+  .story-layout {
+    grid-template-columns: 1fr;
+    align-content: center;
+    gap: 22px;
+  }
+
+  .story-media {
+    order: -1;
+    max-height: 36dvh;
+    max-width: min(340px, 78vw);
+  }
+
+  .story-copy-stack {
+    min-height: 6.5rem;
+  }
 }
 
 .dense-section {
@@ -132,20 +156,45 @@ html {
 }
 
 .desktop-scroll-panel {
-  scrollbar-gutter: stable;
+  scrollbar-gutter: auto;
 }
 
-.scroll-panel-hint {
+/*
+ * A soft fade at the bottom edge instead of a floating label. The label sat on
+ * top of the table rows and read as a defect; a fade says "more below" without
+ * covering anything.
+ */
+.scroll-panel-fade {
   pointer-events: none;
   position: absolute;
-  right: 20px;
-  bottom: 10px;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--color-shell) 92%, transparent);
-  padding: 3px 10px;
-  font-size: 0.75rem;
-  color: var(--color-ink-soft);
-  transition: opacity 160ms ease;
+  inset-inline: 0;
+  bottom: 0;
+  height: 56px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in srgb, var(--color-shell) 92%, transparent)
+  );
+  transition: opacity 200ms ease;
+}
+
+/*
+ * No visible scrollbar. The fade at the bottom edge is the affordance.
+ *
+ * Note the order matters: Chromium ignores the ::-webkit-scrollbar
+ * pseudo-elements entirely once `scrollbar-width` is set, so an earlier
+ * attempt to style a thin bar silently fell back to the platform default —
+ * arrows and all. Setting `none` is the one thing both engines agree on.
+ * The panel is still a focusable region, so it remains keyboard scrollable.
+ */
+.desktop-scroll-panel {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.desktop-scroll-panel::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 /* --------------------------------------------------------------------------
@@ -186,6 +235,19 @@ html {
   }
 }
 
+/*
+ * The size section is height-capped on desktop, and once the sticky header and
+ * the section padding are taken out of a short laptop viewport there is no
+ * room left for a picture under the measurements. The numbers are the point of
+ * this section, so the image steps aside rather than being clipped. It returns
+ * on taller screens and on mobile, where the section is not capped.
+ */
+@media (min-width: 1024px) and (max-height: 820px) {
+  .size-figure {
+    display: none;
+  }
+}
+
 .closing-section {
   display: flex;
   min-height: 60dvh;
@@ -193,7 +255,20 @@ html {
   padding-block: 80px;
 }
 
-@media (min-width: 1024px) and (min-height: 680px) {
+/*
+ * Pinned / internally-scrolling layout.
+ *
+ * The height floor used to be 680px, which silently excluded any laptop
+ * running Windows display scaling — a 1080p screen at 150% is only ~647 CSS
+ * pixels tall. On those machines the story track got no height, the stage was
+ * never sticky, and the whole three-step sequence collapsed into one viewport.
+ *
+ * The floor is now 560px, and `STORY_PINNED_QUERY` in src/lib/landing-motion.ts
+ * MUST be kept identical to this query so the component and the stylesheet
+ * always agree about which layout is active.
+ */
+/* The pinned story runs at every width — phones included. */
+@media (min-height: 560px) {
   .story-track {
     /*
      * One full viewport of scrolling per step.
@@ -214,6 +289,11 @@ html {
     overflow: hidden;
   }
 
+}
+
+/* Internally-scrolling panels are a desktop pattern; on a phone the page
+   itself should scroll rather than a box inside it. */
+@media (min-width: 1024px) and (min-height: 560px) {
   .dense-section {
     height: 100dvh;
     overflow: hidden;
@@ -232,7 +312,8 @@ html {
   }
 }
 
-@media (max-height: 679px), (max-width: 1023px) {
+/* The mirror of the query above. Keep the two in step. */
+@media (max-height: 559px), (max-width: 1023px) {
   .viewport-section__inner,
   .dense-section__inner {
     padding-block: 88px;
@@ -246,7 +327,7 @@ html {
     overflow: visible;
   }
 
-  .scroll-panel-hint {
+  .scroll-panel-fade {
     display: none;
   }
 }

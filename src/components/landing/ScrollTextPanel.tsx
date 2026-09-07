@@ -21,7 +21,7 @@ export function ScrollTextPanel({ label, children }: { label: string; children: 
   return (
     <div className="scroll-panel-wrap min-h-0">
       <div ref={ref} className="desktop-scroll-panel" role="region" aria-label={label} tabIndex={0}>{children}</div>
-      <p className={`scroll-panel-hint ${hasMore ? "opacity-100" : "opacity-0"}`} aria-hidden>Scroll for more</p>
+      <span className={`scroll-panel-fade ${hasMore ? "opacity-100" : "opacity-0"}`} aria-hidden />
     </div>
   );
 }

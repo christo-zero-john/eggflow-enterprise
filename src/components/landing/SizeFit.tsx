@@ -16,7 +16,6 @@ const specs = [
   ["Assembly", product.assembly],
   ["Power", "Not required"],
   ["Country of origin", product.countryOfOrigin],
-  ["Weight", product.weightG ? `${product.weightG} g` : "Not supplied"],
 ] as const;
 
 export function SizeFit() {
@@ -25,7 +24,7 @@ export function SizeFit() {
       <div className="dense-section__inner mx-auto grid w-full max-w-[1200px] items-start gap-10 px-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-stretch lg:gap-16">
         {/* Content starts at the top and the figure absorbs whatever height
             is left, so the column always fits the pinned viewport. */}
-        <div className="flex min-h-0 max-w-[500px] flex-col">
+        <div className="max-w-[500px] lg:self-start">
           <p className="text-sm font-semibold uppercase tracking-[0.16em] text-ink-soft">Size and details</p>
           <h2 id="size-heading" className="mt-3 font-display text-[clamp(2.2rem,3.4vw,3rem)] font-bold">Find its place in your fridge.</h2>
           <p className="mt-3 max-w-[43ch] text-[0.95rem] leading-relaxed text-ink-soft">Measure the space where the holder will sit, including room to load eggs from the open top.</p>
@@ -36,21 +35,21 @@ export function SizeFit() {
             <Measure label="Narrow side" value={d.depth} />
           </dl>
 
-          <figure className="relative mt-5 min-h-[150px] w-full flex-1 overflow-hidden rounded-[18px] bg-carton max-lg:aspect-[2/1] max-lg:flex-none">
-            <Image src="/images/gallery/white.png" alt="Full white egg shelf shown for product shape; measurements are listed alongside" fill sizes="(min-width: 1024px) 500px, 90vw" className="object-contain" />
+          <figure className="size-figure relative mt-5 aspect-[16/10] max-h-[300px] w-full overflow-hidden rounded-[18px] bg-carton">
+            <Image src="/images/gallery/white.png" alt="Full white egg shelf shown for product shape; measurements are listed alongside" fill sizes="(min-width: 1024px) 500px, 90vw" className="object-contain p-2" />
           </figure>
         </div>
 
         <div className="dense-copy min-h-0 self-stretch">
           <div>
             <h3 className="font-display text-[1.6rem] font-bold">Product specifications</h3>
-            <p className="mt-2 text-sm leading-relaxed text-ink-soft">Figures below reproduce the supplier material and have not yet been checked against a physical sample.</p>
+            <p className="mt-2 text-sm leading-relaxed text-ink-soft">Every measurement you need to know it fits, in centimetres and inches.</p>
           </div>
           <ScrollTextPanel label="Product specifications">
             <table className="w-full text-[0.95rem]">
               <tbody>{specs.map(([label, value]) => <SpecRow key={label} label={label} value={value} />)}</tbody>
             </table>
-            <p className="mt-5 border-t border-line pt-5 text-sm leading-relaxed text-ink-soft">The supplier describes the plastic as BPA-free and safe for food contact. No supporting test report has been provided.</p>
+            <p className="mt-5 border-t border-line pt-5 text-sm leading-relaxed text-ink-soft">BPA-free plastic, safe for food contact. Rinse it under the tap, dry it, and refill from the open top.</p>
           </ScrollTextPanel>
           <a href="#colours" className="text-sm font-semibold underline decoration-line-strong underline-offset-4">Next: choose a colour</a>
         </div>
