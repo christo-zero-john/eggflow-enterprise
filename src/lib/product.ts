@@ -86,10 +86,10 @@ export const product = {
    * See docs/06-photography-brief.md.
    */
   images: [
-    { id: "hero-white", src: null as string | null, ratio: "1/1", alt: "The shelf in white, loaded with eggs" },
-    { id: "in-fridge", src: null as string | null, ratio: "4/5", alt: "The shelf standing on a refrigerator shelf, with the clearance above it visible" },
-    { id: "chute-detail", src: null as string | null, ratio: "1/1", alt: "Close view of the curved chute where the next egg arrives" },
-    { id: "colour-pair", src: null as string | null, ratio: "3/2", alt: "The white and charcoal versions side by side" },
+    { id: "hero-white", src: "/images/gallery/white.png", ratio: "1/1", alt: "The shelf in white, loaded with eggs" },
+    { id: "in-fridge", src: "/images/lifestyle/fridge.png", ratio: "4/5", alt: "The shelf standing on a refrigerator shelf" },
+    { id: "chute-detail", src: "/images/detail.png", ratio: "1/1", alt: "Close view of the curved chute where an egg rests" },
+    { id: "colour-charcoal", src: "/images/gallery/charcoal.png", ratio: "1/1", alt: "The shelf in charcoal, loaded with eggs" },
   ],
 } as const;
 

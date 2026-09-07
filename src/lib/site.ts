@@ -19,8 +19,8 @@ export const site = {
   /** In-page sections. This is a single page; these are anchors, not routes. */
   nav: [
     { href: "#how", label: "How it works" },
-    { href: "#size", label: "Will it fit" },
-    { href: "#specs", label: "Specifications" },
+    { href: "#size", label: "Size & specs" },
+    { href: "#colours", label: "Colours" },
     { href: "#questions", label: "Questions" },
   ],
 } as const;

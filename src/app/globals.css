@@ -52,7 +52,7 @@
   color-scheme: light;
   /* The sticky header's height. Any element that pins to the top of the
      viewport must subtract this, or the header crops it. */
-  --header-h: 58px;
+  --header-h: 72px;
 }
 
 html {
@@ -62,6 +62,193 @@ html {
 /* Anchor targets must clear the sticky header. */
 [id] {
   scroll-margin-top: calc(var(--header-h) + 1rem);
+}
+
+.site-header {
+  height: var(--header-h);
+  transform: translateY(-100%);
+  transition: transform 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.site-header[data-visible="true"] {
+  transform: translateY(0);
+}
+
+.viewport-section {
+  display: flex;
+  min-height: 100dvh;
+}
+
+.viewport-section__inner {
+  display: flex;
+  width: min(100%, 1200px);
+  margin-inline: auto;
+  align-items: center;
+  padding: clamp(88px, 10dvh, 112px) clamp(32px, 5vw, 80px);
+}
+
+.viewport-section__inner > * {
+  width: 100%;
+}
+
+/*
+ * These frames are square. Capping only the height let the aspect ratio break
+ * on short viewports — the box kept its width and stopped being a square — so
+ * the width is capped to the same figure.
+ */
+.hero-product-frame,
+.gallery-main {
+  max-height: min(520px, calc(100dvh - 176px));
+  max-width: min(520px, calc(100dvh - 176px));
+}
+
+.story-stage {
+  display: flex;
+  min-height: 100dvh;
+  align-items: center;
+  padding-block: clamp(88px, 10dvh, 112px);
+}
+
+.story-media {
+  max-height: min(550px, calc(100dvh - 176px));
+}
+
+.dense-section {
+  min-height: 100dvh;
+}
+
+.dense-section__inner {
+  padding-block: clamp(88px, 10dvh, 112px);
+}
+
+.dense-copy {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 18px;
+}
+
+.scroll-panel-wrap {
+  position: relative;
+}
+
+.desktop-scroll-panel {
+  scrollbar-gutter: stable;
+}
+
+.scroll-panel-hint {
+  pointer-events: none;
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-shell) 92%, transparent);
+  padding: 3px 10px;
+  font-size: 0.75rem;
+  color: var(--color-ink-soft);
+  transition: opacity 160ms ease;
+}
+
+/* --------------------------------------------------------------------------
+   Disclosure animation
+   --------------------------------------------------------------------------
+   Native <details> snaps open. Browsers that support ::details-content can
+   animate it, which keeps the element's semantics — find-in-page, deep links
+   and no-JS behaviour all survive. Everywhere else it simply snaps, as before.
+   -------------------------------------------------------------------------- */
+
+@supports selector(details::details-content) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+
+  .faq-item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size 300ms cubic-bezier(0.2, 0, 0, 1),
+      content-visibility 300ms allow-discrete;
+  }
+
+  .faq-item[open]::details-content {
+    block-size: auto;
+  }
+}
+
+/* Fallback: fade the answer in where the height cannot be animated. */
+@supports not selector(details::details-content) {
+  .faq-item[open] .faq-answer {
+    animation: faq-reveal 240ms cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  @keyframes faq-reveal {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+.closing-section {
+  display: flex;
+  min-height: 60dvh;
+  align-items: center;
+  padding-block: 80px;
+}
+
+@media (min-width: 1024px) and (min-height: 680px) {
+  .story-track {
+    /*
+     * One full viewport of scrolling per step.
+     *
+     * The stage inside is pinned at 100dvh, so the scrollable travel is
+     * (height - 100dvh). At 220dvh that left only 120dvh for all three steps —
+     * about 40dvh each — which meant a single flick of the wheel crossed the
+     * whole story. 400dvh gives 300dvh of travel: a viewport per step.
+     */
+    height: 400dvh;
+  }
+
+  .story-stage {
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .dense-section {
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .dense-section__inner {
+    height: 100%;
+  }
+
+  .desktop-scroll-panel {
+    height: 100%;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior-y: auto;
+    padding-right: 14px;
+  }
+}
+
+@media (max-height: 679px), (max-width: 1023px) {
+  .viewport-section__inner,
+  .dense-section__inner {
+    padding-block: 88px;
+  }
+
+  .dense-copy {
+    display: block;
+  }
+
+  .desktop-scroll-panel {
+    overflow: visible;
+  }
+
+  .scroll-panel-hint {
+    display: none;
+  }
 }
 
 body {
@@ -166,5 +353,9 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .site-header {
+    transition: none;
   }
 }
