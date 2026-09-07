@@ -1,10 +1,5 @@
 import Link from "next/link";
-
-const sections = [
-  { href: "#mechanism", label: "How it works" },
-  { href: "#specs", label: "Specifications" },
-  { href: "#questions", label: "Questions" },
-];
+import { site } from "@/lib/site";
 
 export function SiteHeader() {
   return (
@@ -18,13 +13,13 @@ export function SiteHeader() {
         </Link>
 
         <nav aria-label="Sections" className="hidden items-center gap-7 md:flex">
-          {sections.map((s) => (
+          {site.nav.map((item) => (
             <a
-              key={s.href}
-              href={s.href}
+              key={item.href}
+              href={item.href}
               className="text-[0.95rem] text-ink-soft transition-colors hover:text-ink"
             >
-              {s.label}
+              {item.label}
             </a>
           ))}
         </nav>
@@ -33,7 +28,7 @@ export function SiteHeader() {
           href="#buy"
           className="rounded-full bg-yolk px-4 py-2 text-[0.95rem] font-semibold text-ink transition-colors hover:bg-yolk-deep sm:px-5"
         >
-          Where to buy
+          Order one
         </a>
       </div>
     </header>

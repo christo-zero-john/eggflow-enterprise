@@ -1,7 +1,12 @@
 import { RackDemo } from "@/components/landing/RackDemo";
 import { MechanismScroll } from "@/components/landing/MechanismScroll";
+import { BenefitStrip } from "@/components/landing/BenefitStrip";
+import { Comparison } from "@/components/landing/Comparison";
+import { SizeFit } from "@/components/landing/SizeFit";
+import { StickyBuyBar } from "@/components/landing/StickyBuyBar";
 import { PhotoSlot } from "@/components/landing/PhotoSlot";
-import { product, notClaims, faqs } from "@/lib/product";
+import { Cta, CtaRow } from "@/components/landing/Cta";
+import { product, notClaims, faqs, useCases } from "@/lib/product";
 
 export default function LandingPage() {
   return (
@@ -12,8 +17,8 @@ export default function LandingPage() {
       {/* the fastest way to answer it is to let them try.                 */}
       {/* ================================================================ */}
       <section className="mx-auto max-w-6xl px-6 pb-16 pt-14 sm:pt-20">
-        {/* On a phone the rack sits directly under the headline: the product is
-            the argument, and it should not be three scrolls down. On a wide
+        {/* On a phone the shelf sits directly under the headline: the product
+            is the argument, and it should not be three scrolls down. On a wide
             screen it moves into its own column beside the copy. */}
         <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1.05fr_1fr]">
           <h1 className="font-display text-display font-extrabold lg:col-start-1 lg:row-start-1 lg:self-end">
@@ -28,41 +33,33 @@ export default function LandingPage() {
 
           <div className="lg:col-start-1 lg:row-start-2 lg:self-start">
             <p className="max-w-[46ch] text-lead text-ink-soft">
-              Four tilted tiers, one moulded piece of plastic, about{" "}
-              <span className="tnum font-medium text-ink">{product.capacity.eggs}</span> eggs. No
-              motor, nothing to plug in, nothing to assemble. The slope is the whole mechanism.
+              Four tilted tiers, about{" "}
+              <span className="tnum font-medium text-ink">{product.capacity.eggs}</span> eggs, and{" "}
+              <span className="tnum font-medium text-ink">{product.dimensionsCm.depth} cm</span> of
+              shelf. No motor, nothing to plug in, nothing to assemble. The slope is the whole
+              mechanism.
             </p>
 
-            <div className="mt-9 flex flex-wrap items-center gap-3">
-              <a
-                href="#buy"
-                className="rounded-full bg-yolk px-6 py-3 font-semibold text-ink transition-colors hover:bg-yolk-deep"
-              >
-                Where to buy it
-              </a>
-              <a
-                href="#mechanism"
-                className="rounded-full border border-line-strong px-6 py-3 font-medium text-ink transition-colors hover:border-ink hover:bg-shell"
-              >
-                Watch the slope work
-              </a>
+            <div className="mt-9">
+              <CtaRow id="hero-cta">
+                <Cta href="#buy">Buy now &mdash; {product.price.display}</Cta>
+                <Cta href="#how" variant="secondary">
+                  See how it works
+                </Cta>
+              </CtaRow>
             </div>
 
             <dl className="mt-10 flex flex-wrap gap-x-10 gap-y-4 border-t border-line pt-6">
               <div>
-                <dt className="text-[0.85rem] text-ink-faint">Price</dt>
+                <dt className="text-[0.85rem] text-ink-faint">Holds</dt>
                 <dd className="tnum font-display text-[1.4rem] font-bold">
-                  {product.price.display}
+                  {product.capacity.eggs} eggs
                 </dd>
               </div>
               <div>
-                <dt className="text-[0.85rem] text-ink-faint">Rated by buyers</dt>
+                <dt className="text-[0.85rem] text-ink-faint">Shelf depth</dt>
                 <dd className="tnum font-display text-[1.4rem] font-bold">
-                  {product.ratings.average}
-                  <span className="text-[0.95rem] font-medium text-ink-soft">
-                    {" "}
-                    from {product.ratings.count}
-                  </span>
+                  {product.dimensionsCm.depth} cm
                 </dd>
               </div>
               <div>
@@ -74,98 +71,75 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <Rail />
+      <BenefitStrip />
 
-      {/* ================================================================ */}
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
-          <div>
-            <h2 className="font-display text-h2 font-bold">What you are actually buying</h2>
-            <div className="mt-6 max-w-[62ch] space-y-4 text-ink-soft">
-              <p>
-                A rack that sits on a fridge shelf and holds eggs in four sloped lines instead of a
-                carton or a loose pile. Each tier is angled a few degrees toward an open slot at the
-                front, so eggs settle forward on their own and stay in order. Raised walls along each
-                groove stop them rolling off the side.
-              </p>
-              <p>
-                That is the entire product. It arrives in one piece, and because nothing on it
-                moves, there is nothing on it that can wear out. The marketplace listing calls this
-                &ldquo;automatic scrolling&rdquo;. It is gravity, and we would rather say so.
-              </p>
-            </div>
+      <Comparison />
 
-            <div className="mt-10 grid gap-4 sm:grid-cols-2">
-              <Fact label="Tiers" value={String(product.tiers)} />
-              <Fact label="Shelf depth needed" value={`${product.dimensionsCm.baseLength} cm`} />
-              <Fact label="Clearance needed" value={`${product.dimensionsCm.height} cm`} />
-              <Fact label="Power required" value="None" />
-            </div>
-          </div>
-
-          <div className="rounded-[18px] border border-line bg-shell p-7">
-            <h3 className="font-display text-h3 font-bold">What it does not do</h3>
-            <ul className="mt-5 space-y-4">
-              {notClaims.map((claim) => (
-                <li
-                  key={claim}
-                  className="border-l-2 border-line-strong pl-4 text-[0.95rem] leading-relaxed text-ink-soft"
-                >
-                  {claim}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* ================================================================ */}
-      <div id="mechanism">
-        <MechanismScroll />
+      <div className="mx-auto max-w-6xl px-6 pb-20 sm:pb-24">
+        <CtaRow>
+          <Cta href="#buy">Buy now</Cta>
+          <Cta href="#size" variant="secondary">
+            Check it fits my fridge
+          </Cta>
+        </CtaRow>
       </div>
 
       {/* ================================================================ */}
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-24" id="specs">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+      <div id="how">
+        <MechanismScroll />
+      </div>
+
+      <SizeFit />
+
+      {/* ================================================================ */}
+      {/* Colours and where it goes. Both are decisions a buyer makes right */}
+      {/* before ordering, so they sit close to the final call to action.   */}
+      {/* ================================================================ */}
+      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+        <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
           <div>
-            <h2 className="font-display text-h2 font-bold">Specifications</h2>
-            <p className="mt-4 max-w-[54ch] text-ink-soft">
-              The size figures come from the supplier&rsquo;s own dimensioned photographs, not from
-              the listing&rsquo;s spec field, which claims a 10 cm cube and is plainly a placeholder.
-              We have not put a tape measure on one ourselves, so it says so.
+            <h2 className="font-display text-h2 font-bold">Two colours, one product</h2>
+            <p className="mt-4 max-w-[46ch] text-ink-soft">
+              White disappears into a fridge interior. Charcoal does not. Nothing else about them
+              differs.
             </p>
 
-            <table className="mt-8 w-full text-[0.95rem]">
-              <tbody>
-                <SpecRow label="Capacity" value={`${product.capacity.eggs} eggs`} />
-                <SpecRow label="Tiers" value={String(product.tiers)} />
-                <SpecRow label="Eggs per tier" value={`about ${product.eggsPerTier}`} />
-                <SpecRow label="Material" value={product.material.value} />
-                <SpecRow label="Pack quantity" value={product.packQuantity} />
-                <SpecRow label="Assembly" value={product.assembly} />
-                <SpecRow label="Power" value="Not required" />
-                <SpecRow label="Country of origin" value={product.countryOfOrigin} />
-                <SpecRow label="Width across the top" value={`${product.dimensionsCm.length} cm`} />
-                <SpecRow label="Depth" value={`${product.dimensionsCm.width} cm`} />
-                <SpecRow label="Height" value={`${product.dimensionsCm.height} cm`} />
-                <SpecRow
-                  label="Base length"
-                  value={`${product.dimensionsCm.baseLength} cm`}
-                />
-                <SpecRow
-                  label="Weight"
-                  value={product.weightG ? `${product.weightG} g` : null}
-                  last
-                />
-              </tbody>
-            </table>
+            <ul className="mt-8 flex flex-wrap gap-4">
+              {product.colors.map((colour) => (
+                <li
+                  key={colour.id}
+                  className="flex items-center gap-3 rounded-full border border-line bg-shell py-2 pl-2 pr-5"
+                >
+                  <span
+                    aria-hidden
+                    className="block h-9 w-9 rounded-full border border-line-strong"
+                    style={{ background: colour.hex }}
+                  />
+                  <span className="font-medium">{colour.label}</span>
+                </li>
+              ))}
+            </ul>
 
-            <p className="mt-6 max-w-[58ch] text-[0.85rem] leading-relaxed text-ink-faint">
-              {product.dimensionsCm.note}
-            </p>
-            <p className="mt-3 max-w-[58ch] text-[0.85rem] leading-relaxed text-ink-faint">
-              {product.material.note}
-            </p>
+            <div className="mt-9">
+              <CtaRow>
+                <Cta href="#buy">Buy now</Cta>
+                <Cta href="#specs" variant="secondary">
+                  Full specifications
+                </Cta>
+              </CtaRow>
+            </div>
+
+            <h3 className="mt-12 font-display text-h3 font-bold">Where it earns its place</h3>
+            <ul className="mt-4 flex flex-wrap gap-2">
+              {useCases.map((use) => (
+                <li
+                  key={use.id}
+                  className="rounded-full bg-yolk-wash px-4 py-1.5 text-[0.9rem] font-medium text-ink"
+                >
+                  {use.label}
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div className="grid grid-cols-2 gap-4 self-start">
@@ -178,64 +152,28 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <Rail />
-
       {/* ================================================================ */}
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
-        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
-          <div>
-            <h2 className="font-display text-h2 font-bold">What buyers said</h2>
-            <p className="mt-4 max-w-[42ch] text-ink-soft">
-              {product.ratings.count} ratings is a small sample, and one of the two written reviews
-              is unhappy. Both are here, because a page showing only the good one tells you nothing.
-            </p>
-            <p className="mt-6 text-[0.85rem] text-ink-faint">
-              From the {product.ratings.source.toLowerCase()}, read on{" "}
-              <span className="tnum">{product.ratings.fetchedOn}</span>.
-            </p>
-          </div>
-
-          <div>
-            <div className="flex items-end gap-5 border-b border-line pb-6">
-              <p className="tnum font-display text-[3.5rem] font-extrabold leading-none">
-                {product.ratings.average}
+      {/* The honesty block. It is here, before the specs and the buy       */}
+      {/* button, because volunteering the limitations is the cheapest      */}
+      {/* credibility available to an unknown brand at this price.          */}
+      {/* ================================================================ */}
+      <section className="border-y border-line bg-shell">
+        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+          <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+            <div>
+              <h2 className="font-display text-h2 font-bold">What it does not do</h2>
+              <p className="mt-4 max-w-[42ch] text-ink-soft">
+                Everything a product page usually leaves out. If any of these matter to you, it is
+                better that you know now than after it arrives.
               </p>
-              <div className="pb-1">
-                <Stars value={product.ratings.average} />
-                <p className="tnum mt-1 text-[0.9rem] text-ink-soft">
-                  {product.ratings.count} ratings, {product.ratings.reviewCount} written
-                </p>
-              </div>
             </div>
-
-            <ul className="mt-6 space-y-3">
-              {product.ratings.breakdown.map((row) => (
-                <li key={row.stars} className="flex items-center gap-4">
-                  <span className="tnum w-4 text-[0.9rem] text-ink-soft">{row.stars}</span>
-                  <span className="h-2 flex-1 overflow-hidden rounded-full bg-shell-deep">
-                    <span
-                      className="block h-full rounded-full bg-yolk"
-                      style={{ width: `${(row.count / product.ratings.count) * 100}%` }}
-                    />
-                  </span>
-                  <span className="tnum w-6 text-right text-[0.9rem] text-ink-soft">
-                    {row.count}
-                  </span>
-                </li>
-              ))}
-            </ul>
-
-            <ul className="mt-10 grid gap-4 sm:grid-cols-2">
-              {product.reviews.map((review) => (
+            <ul className="grid gap-4 sm:grid-cols-2">
+              {notClaims.map((claim) => (
                 <li
-                  key={review.author + review.date}
-                  className="rounded-[14px] border border-line bg-shell p-5"
+                  key={claim}
+                  className="rounded-[14px] border border-line bg-carton p-5 text-[0.95rem] leading-relaxed text-ink-soft"
                 >
-                  <Stars value={review.stars} />
-                  <p className="mt-3 text-[1.05rem] font-medium">{review.body}</p>
-                  <p className="tnum mt-3 text-[0.85rem] text-ink-faint">
-                    {review.author}, {review.date}
-                  </p>
+                  {claim}
                 </li>
               ))}
             </ul>
@@ -244,10 +182,58 @@ export default function LandingPage() {
       </section>
 
       {/* ================================================================ */}
+      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-24" id="specs">
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <h2 className="font-display text-h2 font-bold">Specifications</h2>
+            <p className="mt-4 max-w-[54ch] text-ink-soft">
+              Every figure here comes from the supplier&rsquo;s own dimensioned drawings. Where we
+              have not verified something ourselves, the row says so rather than sounding
+              confident.
+            </p>
+
+            <table className="mt-8 w-full text-[0.95rem]">
+              <tbody>
+                <SpecRow label="Capacity" value={`about ${product.capacity.eggs} eggs`} />
+                <SpecRow label="Tiers" value={String(product.tiers)} />
+                <SpecRow label="Width" value={`${product.dimensionsCm.length} cm`} />
+                <SpecRow label="Height" value={`${product.dimensionsCm.height} cm`} />
+                <SpecRow label="Depth" value={`${product.dimensionsCm.depth} cm`} />
+                <SpecRow label="Base length" value={`${product.dimensionsCm.baseLength} cm`} />
+                <SpecRow label="Material" value={product.material.value} />
+                <SpecRow label="Pack quantity" value={product.packQuantity} />
+                <SpecRow label="Assembly" value={product.assembly} />
+                <SpecRow label="Power" value="Not required" />
+                <SpecRow label="Country of origin" value={product.countryOfOrigin} />
+                <SpecRow label="Weight" value={product.weightG ? `${product.weightG} g` : null} last />
+              </tbody>
+            </table>
+
+            <p className="mt-6 max-w-[58ch] text-[0.85rem] leading-relaxed text-ink-faint">
+              {product.material.note}
+            </p>
+
+            <div className="mt-9">
+              <CtaRow>
+                <Cta href="#buy">Buy now</Cta>
+                <Cta href="#questions" variant="secondary">
+                  Read the questions
+                </Cta>
+              </CtaRow>
+            </div>
+          </div>
+
+          <div className="self-start lg:pt-4">
+            <PhotoSlot slot={product.images[3]} />
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================ */}
       <section className="mx-auto max-w-3xl px-6 py-20 sm:py-24" id="questions">
         <h2 className="font-display text-h2 font-bold">Questions worth asking first</h2>
         <div className="mt-8">
-          {faqs.slice(0, 5).map((faq) => (
+          {faqs.map((faq) => (
             <details key={faq.q} name="faq" className="group border-b border-line">
               <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 text-[1.05rem] font-medium marker:hidden">
                 {faq.q}
@@ -269,77 +255,53 @@ export default function LandingPage() {
             </details>
           ))}
         </div>
-        <p className="mt-8 text-[0.95rem]">
-          <a href="/faq" className="text-ink underline underline-offset-4 hover:text-ink-soft">
-            All {faqs.length} questions
-          </a>
-        </p>
+
+        <div className="mt-10">
+          <CtaRow>
+            <Cta href="#buy">Buy now &mdash; {product.price.display}</Cta>
+          </CtaRow>
+        </div>
       </section>
 
       {/* ================================================================ */}
-      {/* Interim buy section. Ordering on this site is not built yet, and  */}
-      {/* the page says exactly that rather than staging a fake checkout.   */}
+      {/* The close. Ordering on this site is not built yet, and the page   */}
+      {/* says exactly that rather than staging a checkout that goes        */}
+      {/* nowhere. Replace this block with the order form when it exists.   */}
       {/* ================================================================ */}
       <section className="bg-ink py-20 text-shell sm:py-24" id="buy">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <p className="tnum font-display text-[4rem] font-extrabold leading-none">
             {product.price.display}
           </p>
-          <h2 className="mt-5 font-display text-h2 font-bold">
-            Ordering here is not open yet.
-          </h2>
+          <p className="mt-2 text-shell/60">{product.packQuantity}, delivered</p>
+
+          <h2 className="mt-7 font-display text-h2 font-bold">Ordering opens shortly.</h2>
           <p className="mx-auto mt-5 max-w-[52ch] text-shell/70">
-            We are building the order page. Until it is live, the only way to actually buy this is
-            the marketplace listing it is sold on, where {product.seller.name} handles payment,
-            delivery and the {product.fulfilment.returnWindowDays}-day return window under{" "}
-            {product.fulfilment.provider}&rsquo;s policies.
+            We are finishing the order page. Leave us a message and we will tell you the moment it
+            is live &mdash; or reserve one now and we will confirm it with you directly.
           </p>
+
           <div className="mt-9">
-            <a
-              href={product.buyUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block rounded-full bg-yolk px-7 py-3.5 font-semibold text-ink transition-colors hover:bg-yolk-deep"
-            >
-              Open the listing on {product.fulfilment.provider}
-            </a>
+            <CtaRow centered>
+              <Cta href="#buy">Buy now &mdash; {product.price.display}</Cta>
+              <Cta href="#questions" variant="onInk">
+                Know more
+              </Cta>
+            </CtaRow>
           </div>
-          <p className="mt-6 text-[0.85rem] text-shell/50">
-            That link leaves this site. We do not take payment here, and nothing on this page
-            charges you.
+
+          <p className="mt-8 text-[0.85rem] text-shell/50">
+            Nothing on this page charges you, and there is no checkout behind it yet.
           </p>
         </div>
       </section>
+
+      <StickyBuyBar />
     </>
   );
 }
 
 /* -------------------------------------------------------------------------- */
-
-/**
- * The section rule descends left to right and ends in an egg, at the angle the
- * rails actually sit at. It is the only ornament on the page, and it is the
- * mechanism drawn small: things travel down the slope and gather at the front.
- */
-function Rail() {
-  return (
-    <div className="mx-auto max-w-6xl px-6">
-      <div className="relative py-2">
-        <hr className="rail" />
-        <span className="rail-dot" aria-hidden />
-      </div>
-    </div>
-  );
-}
-
-function Fact({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-[12px] border border-line bg-shell px-4 py-3">
-      <p className="text-[0.8rem] text-ink-faint">{label}</p>
-      <p className="tnum mt-0.5 font-display text-[1.15rem] font-bold">{value}</p>
-    </div>
-  );
-}
 
 function SpecRow({
   label,
@@ -363,20 +325,5 @@ function SpecRow({
         )}
       </td>
     </tr>
-  );
-}
-
-function Stars({ value }: { value: number }) {
-  return (
-    <span className="flex gap-0.5" aria-label={`${value} out of 5`}>
-      {[1, 2, 3, 4, 5].map((i) => (
-        <svg key={i} width="15" height="15" viewBox="0 0 16 16" aria-hidden>
-          <path
-            d="M8 1.6l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.4l-3.8 2 .7-4.3-3.1-3 4.3-.6z"
-            fill={i <= Math.round(value) ? "var(--color-yolk)" : "var(--color-line-strong)"}
-          />
-        </svg>
-      ))}
-    </span>
   );
 }

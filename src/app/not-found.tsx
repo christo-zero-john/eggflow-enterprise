@@ -1,26 +1,21 @@
 import Link from "next/link";
-import { Container } from "@/components/site/Container";
 
 export default function NotFound() {
   return (
-    <section className="ef-section">
-      <Container narrow>
-        <div className="ef-stack-lg">
-          <h1 className="ef-h2">That page is not here</h1>
-          <p className="ef-lead">
-            The link may be old, or mistyped. The product page has the specifications and
-            photographs.
-          </p>
-          <div className="ef-btn-row">
-            <Link href="/product" className="ef-btn ef-btn--primary">
-              Go to the product
-            </Link>
-            <Link href="/" className="ef-btn ef-btn--ghost">
-              Back to the start
-            </Link>
-          </div>
-        </div>
-      </Container>
-    </section>
+    <main className="mx-auto flex min-h-dvh max-w-2xl flex-col justify-center px-6 py-24">
+      <p className="tnum text-[0.9rem] font-medium text-ink-faint">404</p>
+      <h1 className="mt-3 font-display text-h2 font-bold">There is nothing on this page.</h1>
+      <p className="mt-4 text-ink-soft">
+        The link is wrong, or this page has moved. Everything about the shelf is on one page.
+      </p>
+      <p className="mt-8">
+        <Link
+          href="/"
+          className="inline-flex min-h-11 items-center rounded-full bg-yolk px-6 py-3 font-semibold text-ink transition-[background-color,transform] duration-150 hover:-translate-y-px hover:bg-yolk-deep active:translate-y-0 active:scale-[0.985]"
+        >
+          Back to the start
+        </Link>
+      </p>
+    </main>
   );
 }
