@@ -24,7 +24,7 @@ export function SizeFit() {
       <div className="dense-section__inner mx-auto grid w-full max-w-[1200px] items-start gap-10 px-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-stretch lg:gap-16">
         {/* Content starts at the top and the figure absorbs whatever height
             is left, so the column always fits the pinned viewport. */}
-        <div className="max-w-[500px] lg:self-start">
+        <div className="flex min-h-0 max-w-[500px] flex-col lg:self-stretch">
           <p className="text-sm font-semibold uppercase tracking-[0.16em] text-ink-soft">Size and details</p>
           <h2 id="size-heading" className="mt-3 font-display text-[clamp(2.2rem,3.4vw,3rem)] font-bold">Find its place in your fridge.</h2>
           <p className="mt-3 max-w-[43ch] text-[0.95rem] leading-relaxed text-ink-soft">Measure the space where the holder will sit, including room to load eggs from the open top.</p>
@@ -35,8 +35,8 @@ export function SizeFit() {
             <Measure label="Narrow side" value={d.depth} />
           </dl>
 
-          <figure className="size-figure relative mt-5 aspect-[16/10] max-h-[300px] w-full overflow-hidden rounded-[18px] bg-carton">
-            <Image src="/images/gallery/white.png" alt="Full white egg shelf shown for product shape; measurements are listed alongside" fill sizes="(min-width: 1024px) 500px, 90vw" className="object-contain p-2" />
+          <figure className="size-figure relative mt-6 aspect-[4/3] max-h-[min(280px,30dvh)] w-full max-w-[400px] self-start overflow-hidden rounded-[18px] bg-carton lg:mt-auto">
+            <Image src="/images/gallery/white.png" alt="Full white egg shelf shown for product shape; measurements are listed alongside" fill sizes="(min-width: 1024px) 500px, 90vw" className="object-cover" />
           </figure>
         </div>
 
@@ -63,5 +63,5 @@ function Measure({ label, value }: { label: string; value: number }) {
 }
 
 function SpecRow({ label, value }: { label: string; value: string }) {
-  return <tr className="border-b border-line"><th scope="row" className="w-[38%] py-3 pr-4 text-left font-normal text-ink-soft">{label}</th><td className="py-3 font-medium">{value}</td></tr>;
+  return <tr className="align-top max-sm:border-0 sm:border-b sm:border-line"><th scope="row" className="w-[38%] border-line py-2.5 pr-4 text-left font-normal text-ink-soft max-sm:border-r sm:py-3">{label}</th><td className="py-2.5 font-medium max-sm:pl-4 sm:py-3">{value}</td></tr>;
 }

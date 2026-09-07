@@ -31,7 +31,7 @@ export function StorageSection() {
 
           <ul className="mt-6 border-t border-line">
             {benefits.map(([title, body]) => (
-              <li key={title} className="grid grid-cols-[1fr_1.7fr] gap-5 border-b border-line py-3">
+              <li key={title} className="grid gap-1.5 border-b border-line py-3.5 sm:grid-cols-[1fr_1.7fr] sm:gap-5 sm:py-3">
                 <h3 className="font-display text-lg font-bold">{title}</h3>
                 <p className="text-[0.9rem] leading-normal text-ink-soft">{body}</p>
               </li>

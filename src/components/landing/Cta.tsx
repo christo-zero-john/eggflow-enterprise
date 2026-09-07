@@ -14,7 +14,10 @@ import type { ReactNode } from "react";
 type Variant = "primary" | "secondary" | "onInk";
 
 const base =
-  "inline-flex min-h-11 cursor-pointer select-none items-center justify-center gap-2 rounded-full px-6 py-3 font-semibold " +
+  // On a phone the pair shares one row: each button takes an equal half and
+  // the label never wraps. Stacking them wasted the width on both sides.
+  "inline-flex min-h-11 flex-1 cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap rounded-full " +
+  "px-4 py-3 text-[0.92rem] font-semibold sm:flex-none sm:px-6 sm:text-base " +
   "transition-[background-color,border-color,color,transform,box-shadow] duration-150 ease-out " +
   "hover:-translate-y-px active:translate-y-0 active:scale-[0.985] active:duration-75 " +
   "motion-reduce:transform-none motion-reduce:transition-none";
@@ -57,7 +60,7 @@ export function CtaRow({
   return (
     <div
       id={id}
-      className={`flex flex-wrap items-center gap-3 ${centered ? "justify-center" : ""}`}
+      className={`flex flex-nowrap items-center gap-2.5 sm:flex-wrap sm:gap-3 ${centered ? "justify-center" : ""}`}
     >
       {children}
     </div>
