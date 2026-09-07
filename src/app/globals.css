@@ -128,8 +128,16 @@ html {
 
   .story-media {
     order: -1;
-    max-height: 36dvh;
-    max-width: min(340px, 78vw);
+    max-height: 33dvh;
+    max-width: min(320px, 76vw);
+  }
+
+  /*
+   * Clear the sticky buy bar, which is fixed to the bottom of the viewport on
+   * phones and was covering the last line of the pinned stage.
+   */
+  .story-stage {
+    padding-block: calc(var(--header-h) + 12px) 92px;
   }
 
   .story-copy-stack {

@@ -119,7 +119,7 @@ function PinnedStory({ reducedMotion }: { reducedMotion: boolean }) {
                     aria-current={story.active === index ? "step" : undefined}
                     aria-label={`Step ${index + 1} of ${steps.length}: ${step.title}`}
                     onClick={() => goToStep(index)}
-                    className="group flex h-10 cursor-pointer items-center px-1"
+                    className="group flex h-11 min-w-11 cursor-pointer items-center justify-center px-2"
                   >
                     <span
                       className={`block h-[5px] rounded-full transition-all duration-300 ease-out ${
