@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="EggFlow">
+  <rect width="32" height="32" rx="6" fill="#1f5a6b"/>
+  <g stroke="#d3dade" stroke-width="1.6" stroke-linecap="round">
+    <path d="M7 11h18"/><path d="M7 16h18"/><path d="M7 21h18"/>
+  </g>
+  <ellipse cx="22" cy="8.4" rx="3" ry="3.6" fill="#c88a2b"/>
+</svg>
