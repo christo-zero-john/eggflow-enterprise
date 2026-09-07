@@ -1,0 +1,749 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<title>EggFlow — before we can add a Buy button</title>
+<style>
+  @page { size: A4; margin: 17mm 16mm 15mm; }
+
+  :root {
+    --ink: #191714;
+    --soft: #55504a;
+    --faint: #857e75;
+    --accent: #b0761a;
+    --accent-ink: #6d4708;
+    --wash: #faf6ee;
+    --wash-warn: #fdf3e3;
+    --line: #ded8cd;
+    --line-strong: #bdb4a5;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  body {
+    margin: 0;
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    font-size: 10.4pt;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+
+  h1, h2, h3, h4 { margin: 0; line-height: 1.18; letter-spacing: -0.012em; }
+  p { margin: 0 0 0.75em; }
+  p:last-child { margin-bottom: 0; }
+  ul, ol { margin: 0 0 0.75em; padding-left: 1.15em; }
+  li { margin-bottom: 0.35em; }
+  li:last-child { margin-bottom: 0; }
+  strong { font-weight: 600; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  .page { break-after: page; }
+  .page:last-child { break-after: auto; }
+  .keep { break-inside: avoid; }
+  h2, h3 { break-after: avoid; }
+
+  /* ---------- cover ---------- */
+  .cover { padding-top: 14mm; }
+  .eyebrow {
+    font-size: 9pt; font-weight: 600; color: var(--accent-ink);
+    letter-spacing: 0.02em; margin-bottom: 8mm;
+  }
+  .cover h1 { font-size: 30pt; font-weight: 700; max-width: 15cm; }
+  .cover .sub {
+    margin-top: 6mm; font-size: 13pt; line-height: 1.4;
+    color: var(--soft); max-width: 13.5cm; font-weight: 400;
+  }
+  .meta {
+    margin-top: 16mm; border-top: 1px solid var(--line); padding-top: 5mm;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm;
+    font-size: 9.2pt;
+  }
+  .meta dt { color: var(--faint); margin-bottom: 1.5mm; }
+  .meta dd { margin: 0; font-weight: 600; }
+
+  /* ---------- structure ---------- */
+  .sec-label {
+    font-size: 8.6pt; font-weight: 700; color: var(--accent-ink);
+    letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 3mm;
+  }
+  h2.title { font-size: 19pt; font-weight: 700; margin-bottom: 4mm; }
+  h3.blocker {
+    font-size: 12.6pt; font-weight: 650; margin-bottom: 2.5mm;
+    display: flex; gap: 3.5mm; align-items: baseline;
+  }
+  h3.blocker .n {
+    font-size: 9.5pt; font-weight: 700; color: var(--accent);
+    min-width: 7mm;
+  }
+  .lede { font-size: 11.4pt; line-height: 1.5; color: var(--soft); max-width: 15cm; margin-bottom: 8mm; }
+
+  .blockers > li { list-style: none; margin-bottom: 7mm; }
+  .blockers { padding: 0; margin: 0; }
+  .blockers .body { padding-left: 10.5mm; max-width: 16cm; }
+  .cost {
+    margin-top: 2.5mm; padding: 2.5mm 4mm; background: var(--wash);
+    border-left: 2.5pt solid var(--accent); font-size: 9.6pt; color: var(--soft);
+  }
+  .cost b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- callouts ---------- */
+  .callout {
+    background: var(--wash-warn); border: 1px solid #eddcbd;
+    border-radius: 3mm; padding: 5mm 6mm; margin: 6mm 0;
+  }
+  .callout h4 { font-size: 11pt; margin-bottom: 2.5mm; }
+
+  .plain {
+    border: 1px solid var(--line); border-radius: 3mm;
+    padding: 5mm 6mm; margin: 6mm 0; background: #fff;
+  }
+
+  /* ---------- questions ---------- */
+  .qgroup { margin-bottom: 9mm; }
+  .qgroup > h3 {
+    font-size: 12pt; font-weight: 700; padding-bottom: 2mm;
+    border-bottom: 1.5pt solid var(--ink); margin-bottom: 5mm;
+  }
+  .q { margin-bottom: 6.5mm; }
+  .q .ask {
+    font-size: 10.8pt; font-weight: 600; margin-bottom: 2mm;
+    display: flex; gap: 3mm; align-items: baseline;
+  }
+  .q .ask .qn {
+    color: #fff; background: var(--ink); border-radius: 50%;
+    min-width: 5.6mm; height: 5.6mm; font-size: 8pt; font-weight: 700;
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transform: translateY(-0.3mm);
+  }
+  .hint {
+    margin-left: 8.6mm; font-size: 9.5pt; color: var(--soft);
+    background: var(--wash); border-radius: 2mm; padding: 3mm 4mm;
+  }
+  .hint b { color: var(--accent-ink); font-weight: 700; }
+  .answer {
+    margin-left: 8.6mm; margin-top: 2.5mm;
+    border-bottom: 1px solid var(--line-strong); height: 7mm;
+  }
+
+  /* ---------- checklist ---------- */
+  .check { list-style: none; padding: 0; margin: 0; }
+  .check li {
+    display: flex; gap: 3.5mm; align-items: flex-start;
+    padding: 2.4mm 0; border-bottom: 1px solid var(--line);
+  }
+  .check li:last-child { border-bottom: 0; }
+  .box {
+    width: 4.2mm; height: 4.2mm; border: 1.2pt solid var(--line-strong);
+    border-radius: 1mm; flex-shrink: 0; margin-top: 1mm;
+  }
+
+  table.seq { width: 100%; border-collapse: collapse; font-size: 9.8pt; }
+  table.seq th, table.seq td {
+    text-align: left; padding: 3mm 3mm 3mm 0; border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.seq th { font-size: 8.6pt; color: var(--faint); font-weight: 600; }
+  table.seq td.who { white-space: nowrap; font-weight: 600; }
+
+  .footnote { margin-top: 10mm; padding-top: 4mm; border-top: 1px solid var(--line);
+    font-size: 8.8pt; color: var(--faint); }
+</style>
+</head>
+<body>
+
+<!-- ============================================ COVER -->
+<section class="page cover">
+  <p class="eyebrow">EggFlow &middot; Prepared by your developer</p>
+  <h1>Before we can put a Buy button on the website</h1>
+  <p class="sub">
+    The website is built and it describes the product well. What it cannot do yet
+    is take an order and take money. This explains why, in plain language, and
+    asks you the questions only you can answer.
+  </p>
+
+  <dl class="meta">
+    <div><dt>Prepared for</dt><dd>The EggFlow owner</dd></div>
+    <div><dt>Prepared by</dt><dd>Development</dd></div>
+    <div><dt>Date</dt><dd class="num">7 September 2026</dd></div>
+  </dl>
+
+  <div class="plain" style="margin-top:14mm">
+    <h4 style="font-size:11pt;margin-bottom:2.5mm">How to use this document</h4>
+    <p style="font-size:10pt;color:var(--soft)">
+      The first part explains the obstacles. The second part is a numbered list of
+      questions, each with a hint telling you how to work out the answer. The last
+      page lists documents to collect.
+    </p>
+    <p style="font-size:10pt;color:var(--soft)">
+      You do not need to answer everything at once. The questions marked
+      <b style="color:var(--accent-ink)">Blocking</b> are the ones that stop all
+      progress until they are settled. The rest can follow.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================ SHORT VERSION -->
+<section class="page">
+  <p class="sec-label">The short version</p>
+  <h2 class="title">One sentence: the moment we add a Buy button, you become the shop.</h2>
+
+  <p class="lede">
+    Right now the marketplace you buy from is doing a lot of work quietly in the
+    background &mdash; taking the money, printing the bill, arranging the courier,
+    handling returns, and carrying the legal responsibility for all of it. A Buy
+    button on your own website moves every one of those jobs onto you.
+  </p>
+
+  <p>None of this is unusual and none of it is a reason to stop. It simply has to
+  be decided rather than discovered later. There are three kinds of obstacle:</p>
+
+  <div class="plain keep">
+    <h4>1. Things that need paperwork</h4>
+    <p style="color:var(--soft)">
+      To accept online payments you need a payment company to approve you, and
+      they check who you are before they will move money on your behalf. This is
+      the slowest item, so it should start first.
+    </p>
+  </div>
+
+  <div class="plain keep">
+    <h4>2. Things that need a decision from you</h4>
+    <p style="color:var(--soft)">
+      What price you charge, whether you keep stock, what you promise about
+      delivery and returns. These cost nothing to decide but they cannot be
+      guessed by me, because getting them wrong costs you money on every order.
+    </p>
+  </div>
+
+  <div class="plain keep">
+    <h4>3. One thing that needs honest thought</h4>
+    <p style="color:var(--soft)">
+      If a customer buys from your website and the parcel arrives from somewhere
+      else with somebody else&rsquo;s bill inside showing a different price, that
+      customer will notice. This is the biggest single risk in the whole plan
+      and it is obstacle 05.
+    </p>
+  </div>
+
+  <div class="callout keep">
+    <h4>What is already done</h4>
+    <p style="color:var(--soft);margin:0">
+      The website, the product description, the size information and the
+      photographs&rsquo; layout are finished. The order form, the payment step and
+      the order list are designed and ready to build. They are waiting only on the
+      answers in this document &mdash; roughly a week of work once the answers and
+      the payment account are in place.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================ BLOCKERS A -->
+<section class="page">
+  <p class="sec-label">The obstacles &middot; part 1 of 2</p>
+  <h2 class="title">Who is selling, and how the money moves</h2>
+
+  <ol class="blockers">
+    <li class="keep">
+      <h3 class="blocker"><span class="n">01</span> You become the legal seller</h3>
+      <div class="body">
+        <p>
+          Today, when someone buys through the marketplace, the marketplace and the
+          listed seller are legally responsible. If we take the order on our own
+          website, you are the seller. That means the bill, the delivery promise,
+          the refund, and any complaint all come to you by name.
+        </p>
+        <div class="cost">
+          <b>Why it matters:</b> a customer who is unhappy has no one else to go to.
+          Everything has to be something you can actually deliver on.
+        </div>
+      </div>
+    </li>
+
+    <li class="keep">
+      <h3 class="blocker"><span class="n">02</span> Taking card and UPI payments needs an approved account</h3>
+      <div class="body">
+        <p>
+          You cannot simply put a payment button on a website. A payment company
+          such as Razorpay or Cashfree has to approve you first. They will ask for
+          identity and bank documents, and they will open your website and check it.
+        </p>
+        <p>
+          They specifically look for four pages: a privacy notice, terms, a refund
+          and cancellation policy, and a shipping and delivery policy &mdash; plus
+          a working phone number and address. If those are missing, the application
+          is rejected.
+        </p>
+        <div class="cost">
+          <b>Why it matters:</b> this is the slowest step, often one to three weeks.
+          Nothing else about payments can be finished until it is approved, so it
+          should be started before anything else.
+        </div>
+      </div>
+    </li>
+
+    <li class="keep">
+      <h3 class="blocker"><span class="n">03</span> Bills, and whether you need GST</h3>
+      <div class="body">
+        <p>
+          If you are not registered for GST you can still sell, but what you give
+          the customer is a receipt, not a tax invoice, and you cannot show GST as
+          a separate line or print a GST number. If your sales grow past the
+          threshold, registration stops being optional.
+        </p>
+        <div class="cost">
+          <b>Why it matters:</b> printing a tax number you do not hold is an
+          offence, and some buyers will ask for a proper invoice. It is far easier
+          to decide this now than to rewrite bills after fifty orders.
+        </div>
+      </div>
+    </li>
+
+    <li class="keep">
+      <h3 class="blocker"><span class="n">04</span> Refunds have to come out of your account</h3>
+      <div class="body">
+        <p>
+          When a customer pays the marketplace and cancels, the marketplace refunds
+          them. When a customer pays you and cancels, you refund them &mdash; and if
+          you have already paid your supplier, your money is tied up until that
+          side is resolved.
+        </p>
+        <div class="cost">
+          <b>Why it matters:</b> you need a small cushion of working capital.
+          Refunds are not frequent, but they always arrive at an inconvenient time.
+        </div>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<!-- ============================================ BLOCKERS B -->
+<section class="page">
+  <p class="sec-label">The obstacles &middot; part 2 of 2</p>
+  <h2 class="title">The parcel, the promises, and the paperwork on the page</h2>
+
+  <ol class="blockers" start="5">
+    <li class="keep">
+      <h3 class="blocker"><span class="n">05</span> What the customer finds inside the box</h3>
+      <div class="body">
+        <p>
+          This is the most important item in this document. If we keep buying from
+          the marketplace for each order and having it delivered straight to your
+          customer, then the parcel arrives in the marketplace&rsquo;s packaging with
+          the marketplace&rsquo;s bill inside &mdash; showing the price <em>you</em>
+          paid, not the price the customer paid.
+        </p>
+        <p>
+          A customer who paid you &#8377;399 and finds a bill for &#8377;222 will feel
+          cheated, whether or not that is fair. Expect refund demands and poor
+          reviews, and those reviews are permanent.
+        </p>
+        <div class="cost">
+          <b>Why it matters:</b> there are only three honest ways out, and you need
+          to pick one. Keep your own stock and pack it yourself; or ask the supplier
+          to ship plain, without a bill; or say openly on the website that you source
+          the product, and keep your price close enough that nobody minds.
+        </div>
+      </div>
+    </li>
+
+    <li class="keep">
+      <h3 class="blocker"><span class="n">06</span> The customer cannot return it to the marketplace</h3>
+      <div class="body">
+        <p>
+          They have no order there, so they cannot start a return. Only you can,
+          from your account, and only inside the window the marketplace gives you.
+          If a customer messages you on day six of a seven-day window, you have one
+          day to act.
+        </p>
+        <div class="cost">
+          <b>Why it matters:</b> whatever return period you publish must be shorter
+          than your supplier&rsquo;s, or you will sometimes pay for the return out of
+          your own pocket.
+        </div>
+      </div>
+    </li>
+
+    <li class="keep">
+      <h3 class="blocker"><span class="n">07</span> You do not control the courier</h3>
+      <div class="body">
+        <p>
+          Somebody else picks the delivery company and sets the speed. You cannot
+          promise a date you do not control, and a missed promise is what turns a
+          mildly late delivery into a complaint.
+        </p>
+        <div class="cost">
+          <b>Why it matters:</b> the website should give an honest range, not a
+          date. We need a realistic range from you.
+        </div>
+      </div>
+    </li>
+
+    <li class="keep">
+      <h3 class="blocker"><span class="n">08</span> Some details are legally required on the page</h3>
+      <div class="body">
+        <p>
+          Selling a packaged product online in India means the listing has to show
+          the name and address of the manufacturer or packer, what the item is, the
+          quantity, the price including taxes, the country of origin, and a
+          customer-care contact. Separately, an online shop must show a legal name,
+          address, a contact, and someone named to handle complaints.
+        </p>
+        <div class="cost">
+          <b>Why it matters:</b> two of these &mdash; the manufacturer&rsquo;s
+          address and your contact details &mdash; are information only you can get.
+          They are on the questions list.
+        </div>
+      </div>
+    </li>
+
+    <li class="keep">
+      <h3 class="blocker"><span class="n">09</span> Customer details are your responsibility</h3>
+      <div class="body">
+        <p>
+          The moment the site collects a name, phone number and address, that is
+          personal information and the law expects you to say what you use it for,
+          keep it only as long as needed, and delete it if asked. This is
+          straightforward &mdash; it mostly means a clear privacy page and not
+          selling anyone&rsquo;s details.
+        </p>
+        <div class="cost">
+          <b>Why it matters:</b> it also means we should not add tracking tools such
+          as advertising pixels casually, because they bring extra obligations.
+        </div>
+      </div>
+    </li>
+
+    <li class="keep">
+      <h3 class="blocker"><span class="n">10</span> Photographs, and having no reviews yet</h3>
+      <div class="body">
+        <p>
+          The supplier&rsquo;s photographs belong to them, so we cannot use them on
+          your own shop. Every picture on the site is currently a marked placeholder
+          waiting for real photographs. Separately, a brand-new shop has no reviews,
+          and a low-priced item from an unknown shop leans heavily on reviews.
+        </p>
+        <div class="cost">
+          <b>Why it matters:</b> photographs are the single biggest visual
+          improvement available, and they cost only your time. Reviews will come
+          once real orders are delivered.
+        </div>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<!-- ============================================ QUESTIONS 1 -->
+<section class="page">
+  <p class="sec-label">Questions for you &middot; 1 of 3</p>
+  <h2 class="title">Your business and the money</h2>
+  <p class="lede">
+    Under each question is a hint explaining how to find the answer. Write
+    directly on this page if it helps.
+  </p>
+
+  <div class="qgroup">
+    <h3>A. Who is the seller</h3>
+
+    <div class="q keep">
+      <p class="ask"><span class="qn">1</span> Do you have a registered business, or will you sell as yourself? <b style="color:var(--accent-ink);font-weight:700">&nbsp;Blocking</b></p>
+      <div class="hint">
+        <b>How to answer:</b> most people start as a sole proprietor, which simply
+        means trading under your own PAN. You do not need a company. Check whether
+        you already have a Udyam registration, a shop licence, or a current account
+        in a business name &mdash; if you do, give the exact name as printed.
+      </div>
+      <div class="answer"></div>
+    </div>
+
+    <div class="q keep">
+      <p class="ask"><span class="qn">2</span> Do you have a GST number? <b style="color:var(--accent-ink);font-weight:700">&nbsp;Blocking</b></p>
+      <div class="hint">
+        <b>How to answer:</b> yes or no is enough. If no, estimate roughly what you
+        expect to sell in a year &mdash; if it is well under the threshold you can
+        usually operate without one for now. Worth one short conversation with an
+        accountant, because it also affects whether you can claim back tax on what
+        you buy.
+      </div>
+      <div class="answer"></div>
+    </div>
+
+    <div class="q keep">
+      <p class="ask"><span class="qn">3</span> Which bank account should the money arrive in?</p>
+      <div class="hint">
+        <b>How to answer:</b> the payment company pays into an account whose name
+        matches the identity you register with. Confirm you have an account in that
+        exact name, and that you can supply a cancelled cheque or a statement.
+      </div>
+      <div class="answer"></div>
+    </div>
+  </div>
+
+  <div class="qgroup">
+    <h3>B. Price and payment</h3>
+
+    <div class="q keep">
+      <p class="ask"><span class="qn">4</span> What price will you sell at on your own website? <b style="color:var(--accent-ink);font-weight:700">&nbsp;Blocking</b></p>
+      <div class="hint">
+        <b>How to answer:</b> work upwards from cost. What you pay the supplier,
+        plus delivery, plus roughly 2&ndash;3% that the payment company keeps, plus a
+        small allowance for the occasional return, plus what you want to earn.
+        Then sense-check it against question 8 &mdash; a large gap between your
+        price and the price on the supplier&rsquo;s bill is the risk described in obstacle 05.
+      </div>
+      <div class="answer"></div>
+    </div>
+
+    <div class="q keep">
+      <p class="ask"><span class="qn">5</span> Is delivery free, or charged separately?</p>
+      <div class="hint">
+        <b>How to answer:</b> either is fine, but it must be shown before the
+        customer commits &mdash; a charge that appears at the last moment is both
+        bad practice and against consumer guidelines. Including it in the price
+        usually sells better.
+      </div>
+      <div class="answer"></div>
+    </div>
+
+    <div class="q keep">
+      <p class="ask"><span class="qn">6</span> Do you want cash on delivery as well as online payment?</p>
+      <div class="hint">
+        <b>How to answer:</b> cash on delivery brings more orders, but on a
+        low-priced item a single refused delivery can cost more than the profit on
+        several successful ones. My suggestion is to start online-payment only and
+        add cash on delivery later if you are losing sales without it.
+      </div>
+      <div class="answer"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ QUESTIONS 2 -->
+<section class="page">
+  <p class="sec-label">Questions for you &middot; 2 of 3</p>
+  <h2 class="title">How the product reaches the customer</h2>
+
+  <div class="qgroup">
+    <h3>C. Stock and packing</h3>
+
+    <div class="q keep">
+      <p class="ask"><span class="qn">7</span> Will you keep stock at home, or order one each time a customer buys? <b style="color:var(--accent-ink);font-weight:700">&nbsp;Blocking</b></p>
+      <div class="hint">
+        <b>How to answer:</b> think about how many you could store and afford to buy
+        up front &mdash; even ten units is enough to start. Keeping stock solves the
+        bill-in-the-box problem completely, makes delivery faster, and lets you
+        check each item before it goes out. Ordering per customer ties up no money
+        but creates every problem described in obstacle 05.
+      </div>
+      <div class="answer"></div>
+    </div>
+
+    <div class="q keep">
+      <p class="ask"><span class="qn">8</span> If you order per customer, are you comfortable with them seeing the supplier&rsquo;s bill? <b style="color:var(--accent-ink);font-weight:700">&nbsp;Blocking</b></p>
+      <div class="hint">
+        <b>How to answer:</b> open one of the parcels you have received and look at
+        exactly what is inside &mdash; the packaging, any printed bill, and the
+        price on it. Then imagine a customer who paid you opening the same box.
+        That is the honest test. If the answer is no, you need question 7 or question 9.
+      </div>
+      <div class="answer"></div>
+    </div>
+
+    <div class="q keep">
+      <p class="ask"><span class="qn">9</span> Can your supplier ship without a bill inside, or in plain packaging?</p>
+      <div class="hint">
+        <b>How to answer:</b> just ask them directly. Many suppliers will do plain
+        or gift packaging if you ask, especially for repeat business. Get the answer
+        in writing, because it changes what we can safely promise on the website.
+      </div>
+      <div class="answer"></div>
+    </div>
+  </div>
+
+  <div class="qgroup">
+    <h3>D. What we promise</h3>
+
+    <div class="q keep">
+      <p class="ask"><span class="qn">10</span> How many days does delivery realistically take? <b style="color:var(--accent-ink);font-weight:700">&nbsp;Blocking</b></p>
+      <div class="hint">
+        <b>How to answer:</b> look at your last few orders and count the days from
+        placing to arrival. Give me a range, not a single number &mdash; for
+        example &ldquo;usually 4 to 7 days, sometimes 10 to remote areas&rdquo;. An
+        honest range that we meet is far better than a fast promise that we miss.
+      </div>
+      <div class="answer"></div>
+    </div>
+
+    <div class="q keep">
+      <p class="ask"><span class="qn">11</span> How many days will you accept returns for, and who pays the return postage?</p>
+      <div class="hint">
+        <b>How to answer:</b> find out your supplier&rsquo;s window first, then
+        publish something shorter so you have time to act. If theirs is seven days,
+        offering five to your customer leaves you a safe margin. Also decide whether
+        a customer who simply changed their mind pays the postage, or you do.
+      </div>
+      <div class="answer"></div>
+    </div>
+
+    <div class="q keep">
+      <p class="ask"><span class="qn">12</span> How many orders a day could you actually handle?</p>
+      <div class="hint">
+        <b>How to answer:</b> think about a busy weekday. If ten orders arrived,
+        could you place, pack, and reply to all of them? There is no wrong answer
+        &mdash; I just need to know whether to build for a handful a day or for
+        volume, because they are different systems.
+      </div>
+      <div class="answer"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ QUESTIONS 3 -->
+<section class="page">
+  <p class="sec-label">Questions for you &middot; 3 of 3</p>
+  <h2 class="title">Details that must appear on the site</h2>
+
+  <div class="qgroup">
+    <h3>E. Contact and product information</h3>
+
+    <div class="q keep">
+      <p class="ask"><span class="qn">13</span> Which email address, phone number and postal address should be published? <b style="color:var(--accent-ink);font-weight:700">&nbsp;Blocking</b></p>
+      <div class="hint">
+        <b>How to answer:</b> all three are required by law and checked by the
+        payment company. The phone can be a mobile and the address can be where you
+        actually operate from, including home. The only real requirement is that
+        somebody reads and answers them. If you would rather not publish a personal
+        number, a second SIM is a common solution.
+      </div>
+      <div class="answer"></div>
+    </div>
+
+    <div class="q keep">
+      <p class="ask"><span class="qn">14</span> Who manufactures or packs the product, and at what address? <b style="color:var(--accent-ink);font-weight:700">&nbsp;Blocking</b></p>
+      <div class="hint">
+        <b>How to answer:</b> this is required on the listing by law. Look at the
+        box the product came in, or the supplier&rsquo;s bill &mdash; it is usually
+        printed on one of them. If not, ask the supplier for the manufacturer name
+        and full address in writing.
+      </div>
+      <div class="answer"></div>
+    </div>
+
+    <div class="q keep">
+      <p class="ask"><span class="qn">15</span> Can the supplier give you a document confirming the plastic is food-safe?</p>
+      <div class="hint">
+        <b>How to answer:</b> ask for a test report or certificate. Until we have
+        one, the website says the supplier describes it as BPA-free rather than
+        stating it as fact, which is the safe position. With a report we can say it
+        plainly, and that is worth having.
+      </div>
+      <div class="answer"></div>
+    </div>
+
+    <div class="q keep">
+      <p class="ask"><span class="qn">16</span> Who replies to customer messages, and how quickly?</p>
+      <div class="hint">
+        <b>How to answer:</b> name the person and the realistic time &mdash;
+        &ldquo;me, within a day&rdquo; is a perfectly good answer. Whatever you say,
+        the website will promise, so promise something you can keep on a bad week.
+      </div>
+      <div class="answer"></div>
+    </div>
+
+    <div class="q keep">
+      <p class="ask"><span class="qn">17</span> Can you photograph the product yourself?</p>
+      <div class="hint">
+        <b>How to answer:</b> a phone camera near a window, with the product on a
+        plain sheet of paper, is genuinely enough. About forty minutes gets every
+        picture the site needs. The important ones are: the whole product, a close
+        view of where the egg comes out, and one standing on a real fridge shelf so
+        people can judge the size.
+      </div>
+      <div class="answer"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ NEXT STEPS -->
+<section class="page">
+  <p class="sec-label">What happens next</p>
+  <h2 class="title">The order things should happen in</h2>
+
+  <p class="lede">
+    Two of these can run at the same time, and one of them is slow, so it should
+    start immediately.
+  </p>
+
+  <table class="seq">
+    <thead>
+      <tr><th style="width:12mm">Step</th><th>What</th><th class="who" style="width:28mm">Who</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="num">1</td>
+        <td><strong>Apply for the payment account.</strong> This is the long pole. It cannot finish until the four policy pages are live, so step 2 runs alongside it.</td>
+        <td class="who">You, with me</td>
+      </tr>
+      <tr>
+        <td class="num">2</td>
+        <td><strong>Answer the blocking questions.</strong> Numbers 1, 2, 4, 7, 8, 10, 13 and 14. Everything else can follow later.</td>
+        <td class="who">You</td>
+      </tr>
+      <tr>
+        <td class="num">3</td>
+        <td><strong>I write the four policy pages</strong> &mdash; privacy, terms, refunds, shipping &mdash; using your answers, and publish your contact details.</td>
+        <td class="who">Me</td>
+      </tr>
+      <tr>
+        <td class="num">4</td>
+        <td><strong>You photograph the product.</strong> Independent of everything else, and the biggest visible improvement to the site.</td>
+        <td class="who">You</td>
+      </tr>
+      <tr>
+        <td class="num">5</td>
+        <td><strong>I build the order form and the order list</strong>, so you can see and manage what comes in.</td>
+        <td class="who">Me</td>
+      </tr>
+      <tr>
+        <td class="num">6</td>
+        <td><strong>Payment is connected</strong> once the account is approved, and we test it with a real order of our own before anyone else can buy.</td>
+        <td class="who">Me</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout keep" style="margin-top:9mm">
+    <h4>If you want to start selling sooner</h4>
+    <p style="color:var(--soft);margin:0">
+      There is a shortcut. We can put a form on the site that takes the order
+      details but no money, tells the customer plainly that nothing has been
+      charged, and lets you phone them to confirm and take payment directly. That
+      needs no payment account and could be live in a few days. It converts less
+      well than a real checkout, but it lets you start taking orders while the
+      payment application is being processed.
+    </p>
+  </div>
+
+  <h3 style="font-size:12pt;margin-top:10mm;margin-bottom:4mm">Documents worth collecting now</h3>
+  <ul class="check">
+    <li><span class="box"></span><span>PAN card &mdash; yours, or the business&rsquo;s</span></li>
+    <li><span class="box"></span><span>Bank account details, and a cancelled cheque or recent statement</span></li>
+    <li><span class="box"></span><span>Proof of address for the business</span></li>
+    <li><span class="box"></span><span>GST certificate, if you have one</span></li>
+    <li><span class="box"></span><span>Any business registration you hold &mdash; Udyam, shop licence, or similar</span></li>
+    <li><span class="box"></span><span>The manufacturer&rsquo;s name and address, from the box or the supplier</span></li>
+    <li><span class="box"></span><span>A test report or food-safety certificate, if the supplier has one</span></li>
+    <li><span class="box"></span><span>Your supplier&rsquo;s stated return window, in writing</span></li>
+  </ul>
+
+  <p class="footnote">
+    This document explains commercial and practical obstacles from a developer&rsquo;s
+    point of view. It is not legal or tax advice. The points about registration,
+    tax and required disclosures are worth confirming with an accountant, which is
+    usually a single short conversation.
+  </p>
+</section>
+
+</body>
+</html>
