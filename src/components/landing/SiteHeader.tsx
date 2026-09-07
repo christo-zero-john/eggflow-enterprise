@@ -39,7 +39,7 @@ export function SiteHeader() {
   return (
     <header ref={headerRef} data-visible={visible} onFocus={reveal} onPointerEnter={reveal} onPointerLeave={() => { interactingRef.current = false; }} className="site-header fixed inset-x-0 top-0 z-50 border-b border-line/70 bg-carton/90 backdrop-blur-md">
       <div className="mx-auto flex h-[var(--header-h)] max-w-[1200px] items-center justify-between gap-6 px-8">
-        <Link href="/" className="font-display text-[1.35rem] font-extrabold tracking-tight text-ink">EggFlow</Link>
+        <Link href="/" className="inline-flex min-h-11 items-center font-display text-[1.35rem] font-extrabold tracking-tight text-ink">EggFlow</Link>
         <nav aria-label="Sections" className="hidden items-center gap-7 md:flex">
           {site.nav.map((item) => <a key={item.href} href={item.href} className="text-[0.95rem] text-ink-soft transition-colors hover:text-ink">{item.label}</a>)}
         </nav>

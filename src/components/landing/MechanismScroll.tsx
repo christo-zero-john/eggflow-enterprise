@@ -131,7 +131,7 @@ function PinnedStory({ reducedMotion }: { reducedMotion: boolean }) {
               ))}
             </ol>
 
-            <a href="#size" className="mt-7 inline-flex text-sm text-shell/65 underline decoration-shell/30 underline-offset-4 hover:text-shell">Skip to size</a>
+            <a href="#size" className="mt-4 inline-flex min-h-11 items-center text-sm text-shell/65 underline decoration-shell/30 underline-offset-4 hover:text-shell">Skip to size</a>
           </div>
 
           <figure className="story-media relative mx-auto aspect-square w-full max-w-[550px] overflow-hidden rounded-[20px] bg-[#ede6da]">

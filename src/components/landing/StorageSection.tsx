@@ -37,7 +37,7 @@ export function StorageSection() {
               </li>
             ))}
           </ul>
-          <a href="#size" className="mt-5 inline-flex text-sm font-semibold underline decoration-line-strong underline-offset-4">
+          <a href="#size" className="mt-5 inline-flex min-h-11 items-center text-sm font-semibold underline decoration-line-strong underline-offset-4">
             Check the size
           </a>
         </div>

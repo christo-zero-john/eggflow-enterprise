@@ -28,7 +28,7 @@ export function FaqSection() {
               </details>
             ))}
           </ScrollTextPanel>
-          <a href="#buy" className="text-sm font-semibold underline decoration-line-strong underline-offset-4">Continue to order</a>
+          <a href="#buy" className="inline-flex min-h-11 items-center text-sm font-semibold underline decoration-line-strong underline-offset-4">Continue to order</a>
         </div>
       </div>
     </section>

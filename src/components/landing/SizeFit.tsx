@@ -51,7 +51,7 @@ export function SizeFit() {
             </table>
             <p className="mt-5 border-t border-line pt-5 text-sm leading-relaxed text-ink-soft">BPA-free plastic, safe for food contact. Rinse it under the tap, dry it, and refill from the open top.</p>
           </ScrollTextPanel>
-          <a href="#colours" className="text-sm font-semibold underline decoration-line-strong underline-offset-4">Next: choose a colour</a>
+          <a href="#colours" className="inline-flex min-h-11 items-center text-sm font-semibold underline decoration-line-strong underline-offset-4">Next: choose a colour</a>
         </div>
       </div>
     </section>

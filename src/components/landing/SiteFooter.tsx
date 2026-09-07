@@ -16,7 +16,7 @@ export function SiteFooter() {
               <a
                 key={item.href}
                 href={item.href}
-                className="text-ink-soft transition-colors hover:text-ink"
+                className="inline-flex min-h-11 items-center text-ink-soft transition-colors hover:text-ink"
               >
                 {item.label}
               </a>
