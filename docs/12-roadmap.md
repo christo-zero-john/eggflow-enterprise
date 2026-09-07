@@ -20,9 +20,9 @@
 ### Content and rebuild
 - Home, `/product`, `/how-it-works`, `/faq`, `/contact` rebuilt in the new direction
 - `/privacy`, `/terms`, `/shipping`, `/refunds` written as real pages
-- Every Meesho reference removed except a sourced review attribution
+- Every marketplace reference removed
 - `AggregateRating` structured data removed
-- Meesho imagery and `remotePatterns` deleted
+- Marketplace imagery and `remotePatterns` deleted
 
 ### Verification
 - Vitest suite per [11-testing.md](11-testing.md)
@@ -55,7 +55,7 @@ Ordered by value per unit of work.
 |---|---|---|
 | **Transactional email** | First customer asks "did it go through?" | Resend + React Email. `notify.ts` already exists as the seam; only that file changes. |
 | **Razorpay** | >5 orders/day, or `new` → `payment_received` median >24h | See [09-payments-roadmap.md](09-payments-roadmap.md). Additive, no migration. |
-| **Your own reviews** | 20 delivered orders | Replaces borrowed Meesho ratings. `AggregateRating` can return once the ratings are genuinely ours. |
+| **Your own reviews** | 20 delivered orders | Replaces the borrowed marketplace ratings. `AggregateRating` can return once the ratings are genuinely ours. |
 | **Real dimensions on the page** | Immediately after measuring | Already wired; needs only the data. |
 | **WhatsApp order link** | If phone follow-up is the bottleneck | A `wa.me` deep link pre-filled with the order code. Cheap, and how a lot of Indian D2C actually operates. |
 | **Dark mode** | When photography exists on transparent backgrounds | Deferred honestly in [05-design-system.md](05-design-system.md) rather than half-built. |

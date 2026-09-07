@@ -9,11 +9,11 @@ Supersedes: the marketplace-referral architecture described in `README.md`
 ## 1. Why this work exists
 
 The site as built is a **referral page**. Its entire architecture assumes the
-sale happens on Meesho: `BuyPanel.tsx` carries the comment "Deliberately not a
+sale happens on the marketplace: `BuyPanel.tsx` carries the comment "Deliberately not a
 checkout", `product.fulfilment.note` says "We do not ship this product
-ourselves", and `/shipping-and-returns` attributes every term to Meesho by name.
+ourselves", and `/shipping-and-returns` attributes every term to the marketplace by name.
 
-The goal now is the opposite. Customers place the order here, so Meesho is
+The goal now is the opposite. Customers place the order here, so the marketplace is
 removed from the path entirely. That inverts the core premise of the site,
 which is why this is a rebuild rather than a feature.
 
@@ -170,8 +170,8 @@ Direction: **modern DTC — warm, confident, photo-led.** Tokens, type scale and
 component inventory are specified in [../05-design-system.md](../05-design-system.md).
 
 The dependency worth naming: the direction is photo-led and we own no
-photography. `product.images` currently hotlinks `images.meesho.com`, which was
-defensible for a page pointing at Meesho and is not defensible on our own
+photography. `product.images` currently hotlinks the marketplace image CDN, which was
+defensible for a page pointing at the marketplace and is not defensible on our own
 storefront — it is another party's imagery, and the URLs can disappear.
 
 Mitigation, in this order:
@@ -183,7 +183,7 @@ Mitigation, in this order:
    one-line change in `product.images`.
 3. The interactive rack component carries the hero. It is a real, working
    demonstration of the mechanism and does not depend on photography at all.
-4. All Meesho image URLs and the `remotePatterns` entry are deleted.
+4. All the marketplace image URLs and the `remotePatterns` entry are deleted.
 
 ## 7. Risks, and what is done about each
 
@@ -193,7 +193,7 @@ Mitigation, in this order:
 | **AI images misrepresenting a physical product.** | The brief marks every shot `AI-OK` or `REAL-PHOTO-REQUIRED`. Primary product shots are the second category. |
 | **Personal data with no payment gateway to hide behind.** Name, phone and address are personal data under the DPDP Act 2023 the moment they are collected. | Real `/privacy` page, stated retention period, service-role key never exposed to the browser, RLS denying anonymous reads. |
 | **Drop-ship timelines we do not control.** | `/shipping` gives a range attributed to the supplier and states plainly that we do not operate the courier. No promised date anywhere. |
-| **Meesho ratings on our own storefront.** 4.3 from 28 ratings belongs to a marketplace listing, not to us. | `AggregateRating` structured data is removed. Reviews may be quoted only with the source named on-screen. |
+| **the marketplace ratings on our own storefront.** 4.3 from 28 ratings belongs to a marketplace listing, not to us. | `AggregateRating` structured data is removed. Reviews may be quoted only with the source named on-screen. |
 | **Manual payment is unauditable.** | `order_events` records who marked payment received and when, with a free-text reference field for the UPI transaction id. |
 
 ## 8. Testing

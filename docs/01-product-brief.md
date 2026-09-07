@@ -11,14 +11,14 @@ Price: ₹222. Two colours: grey and off-white. Pack of 1.
 
 ## What changed on 2026-09-04
 
-The site was a **referral page** that sent buyers to a Meesho listing. It is now
+The site was a **referral page** that sent buyers to a marketplace listing. It is now
 a **store**. We take the order; a supplier drop-ships the unit.
 
 Three things follow from that, and they are not optional:
 
 1. **We are the seller of record.** Delivery questions, damage, and refunds come
-   to us, not to Meesho. Every line of copy that says otherwise is wrong now.
-2. **Meesho's ratings are not ours.** The 4.3 from 28 ratings belongs to a
+   to us, not to the marketplace. Every line of copy that says otherwise is wrong now.
+2. **The marketplace ratings are not ours.** The 4.3 from 28 ratings belongs to a
    marketplace listing. It cannot be presented as this store's rating, and the
    `AggregateRating` structured data comes out.
 3. **We do not control the courier.** The supplier ships. Our delivery copy

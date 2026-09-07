@@ -91,7 +91,7 @@ Then, against the deployed URL:
 - [ ] A status transition writes a new `order_events` row
 - [ ] `/sitemap.xml` and `/robots.txt` use the real origin
 - [ ] Lighthouse: performance and accessibility both ≥ 95 on mobile
-- [ ] The word "Meesho" appears nowhere but a sourced review attribution
+- [ ] No marketplace is named anywhere on the site
 
 ## Go-live checklist
 

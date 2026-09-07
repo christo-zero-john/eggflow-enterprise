@@ -133,8 +133,8 @@ Nothing goes live until every one of these is done.
 - [ ] Monitored email, phone and postal address in `site.ts`
 - [ ] Manufacturer / packer name and address from the supplier
 - [ ] `site.url` set to the real origin
-- [ ] Meesho `AggregateRating` structured data removed
-- [ ] All Meesho imagery removed and replaced
+- [ ] Borrowed `AggregateRating` structured data removed
+- [ ] All marketplace imagery removed and replaced
 - [ ] Data retention period stated on `/privacy`
 - [ ] Grievance contact in the footer
-- [ ] The word "Meesho" appears nowhere except a sourced review attribution
+- [ ] No marketplace is named anywhere on the site

@@ -67,35 +67,35 @@ are simply lies.
 ## Copy that must change now we are the seller
 
 This is the largest content task in the rebuild. Every one of these currently
-says Meesho.
+names the marketplace.
 
 | Location | Was | Becomes |
 |---|---|---|
-| `product.buyUrl` | Meesho listing URL | Deleted. Replaced by `/order`. |
-| `product.fulfilment.provider` | `"Meesho"` | Us as seller; supplier named as the party who dispatches. |
+| `product.buyUrl` | Marketplace listing URL | Deleted. Replaced by `/order`. |
+| `product.fulfilment.provider` | the marketplace name (removed) | Us as seller; supplier named as the party who dispatches. |
 | `product.fulfilment.note` | "We do not ship this product ourselves." | "Your order is placed with us and dispatched by our supply partner." |
-| `BuyPanel` | "Buy on Meesho" + "Deliberately not a checkout" | `OrderPanel`: colour, quantity, **Order now**. |
-| Home closing section | "₹222, sold through Meesho." | "₹222. Ordered here." |
-| `/shipping-and-returns` | Meesho's 7-day window, attributed to Meesho | `/shipping` + `/refunds`, both owned by us. |
-| FAQ "Who am I buying from?" | "The order is placed on Meesho…" | Us, with the supply partner named and the manual-payment step explained. |
-| Footer | Meesho attribution | Our legal seller details. |
-| `StructuredData` | `AggregateRating` from Meesho | Removed. `Offer` only. |
-| Hero micro-line | "₹222 on Meesho · COD · 7-day returns" | "₹222 · dispatched in N days · X-day returns" — real values only. |
+| `BuyPanel` | "Buy on the marketplace" + "Deliberately not a checkout" | `OrderPanel`: colour, quantity, **Order now**. |
+| Home closing section | "₹222, sold through the marketplace." | "₹222. Ordered here." |
+| `/shipping-and-returns` | the marketplace 7-day window, attributed to it | `/shipping` + `/refunds`, both owned by us. |
+| FAQ "Who am I buying from?" | "The order is placed on the marketplace…" | Us, with the supply partner named and the manual-payment step explained. |
+| Footer | the marketplace attribution | Our legal seller details. |
+| `StructuredData` | `AggregateRating` from the marketplace | Removed. `Offer` only. |
+| Hero micro-line | "₹222 on the marketplace · COD · 7-day returns" | "₹222 · dispatched in N days · X-day returns" — real values only. |
 
 **A partial migration is worse than none.** A page that takes your order and
 then says "we do not ship this ourselves" three sections later destroys exactly
 the trust the site is built to create. This is a search-and-replace on the word
-"Meesho" across `src/`, done deliberately, with the result read end to end.
+"the marketplace" across `src/`, done deliberately, with the result read end to end.
 
 ## Reviews and ratings
 
-The ratings are Meesho's. We are not Meesho.
+The ratings are the marketplace's. We are not the marketplace.
 
 - `AggregateRating` structured data is **removed**. Emitting a rating you did not
   collect risks a Google manual action, and asserting another platform's rating
   as your own is misrepresentation.
 - The two verbatim reviews may stay **only** with the source named on screen:
-  "From the Meesho listing for this product, fetched 2026-09-03."
+  "From the marketplace listing for this product, fetched 2026-09-03."
 - The three-star "No satisfaction" review stays. It is the most credible element
   on the page, and removing it while keeping the four-star one is cherry-picking.
 - As real orders complete, collect your own reviews. Then this section becomes

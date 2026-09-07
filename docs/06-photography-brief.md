@@ -328,7 +328,7 @@ Every slot renders a labelled SVG placeholder at its exact aspect ratio, showing
 the slot id and the intended dimensions. This means:
 
 - The layout is final now. Nothing shifts when real images land.
-- No `images.meesho.com` URL remains anywhere in the codebase.
+- No the marketplace image CDN URL remains anywhere in the codebase.
 - A missing image is visible as a missing image, rather than silently collapsing
   a section to zero height.
 
