@@ -244,16 +244,32 @@ html {
 }
 
 /*
- * The size section is height-capped on desktop, and once the sticky header and
- * the section padding are taken out of a short laptop viewport there is no
- * room left for a picture under the measurements. The numbers are the point of
- * this section, so the image steps aside rather than being clipped. It returns
- * on taller screens and on mobile, where the section is not capped.
+ * The size section is height-capped on desktop. On a genuinely short laptop
+ * viewport there is no room for a picture under the measurements once the
+ * header and padding are removed, so it steps aside rather than being clipped.
+ * Everywhere else it stays, anchored to the bottom of the column so the
+ * leftover space sits between the text and the image instead of below it.
  */
-@media (min-width: 1024px) and (max-height: 820px) {
+@media (min-width: 1024px) and (max-height: 700px) {
   .size-figure {
     display: none;
   }
+}
+
+/* The thumbnail strip scrolls sideways without showing a bar. */
+.gallery-strip {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: x proximity;
+}
+
+.gallery-strip::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.gallery-strip > * {
+  scroll-snap-align: start;
 }
 
 .closing-section {
