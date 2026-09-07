@@ -7,8 +7,8 @@ who knows the product well enough to tell you what it is bad at.
 
 **Do**
 
-- "Take the front egg. The next one rolls down."
-- "It has no motor. The tilt is the whole mechanism."
+- "Your next egg, within reach."
+- "Lift the front egg directly from the tray."
 - "We have not measured one yet, so we are not going to guess."
 
 **Do not**
@@ -38,9 +38,9 @@ site.
 
 ### Allowed — observable and true
 
-Gravity-fed, no motor, no power, no batteries · eggs roll forward when the front
-one is removed · raised side walls prevent sideways roll · nothing to wear out
-because nothing moves · not insulated · no lid · not designed to stack.
+Gravity-fed, no motor, no power, no batteries · the supplier describes eggs as
+rolling forward when the front one is removed · raised side walls · not
+insulated · no lid · not designed to stack. Avoid absolute durability claims.
 
 ### Forbidden until evidence exists
 

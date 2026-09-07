@@ -8,6 +8,7 @@ pnpm install
 pnpm dev        # http://localhost:3000
 pnpm build      # must pass clean before any deploy
 pnpm lint
+pnpm test
 ```
 
 ## The two rules
@@ -39,13 +40,19 @@ src/
     globals.css      Tailwind v4 @theme tokens
     opengraph-image.tsx  robots.ts  sitemap.ts  not-found.tsx
   components/landing/
-    RackDemo         the interactive hero illustration
-    RackArt          shared SVG primitives + rack-geometry.ts
-    MechanismScroll  the pinned scroll sequence
-    BenefitStrip  Comparison  SizeFit  PhotoSlot  Cta  StickyBuyBar
+    ProductHero      product-led, image-based hero
+    StorageSection   refrigerator context and concise benefits
+    MechanismScroll  pinned three-image product sequence
+    SizeFit          fit summary + scrollable specifications
+    ProductGallery   colour and image selection
+    FaqSection       scrollable desktop questions panel
+    ViewportSection  shared full-viewport composition
+    ScrollTextPanel  accessible dense-content scroller
+    Cta  StickyBuyBar
     SiteHeader  SiteFooter
   lib/
     product.ts       SINGLE SOURCE OF TRUTH
+    landing-motion.ts pure story/header state rules
     site.ts          nav, metadata, contact
 ```
 
@@ -63,20 +70,20 @@ Bricolage Grotesque for display, Instrument Sans for text.
 
 These are tracked, not forgotten.
 
-- **No photography.** Every image is a labelled placeholder at the correct
-  aspect ratio. Drop files into `public/images/product/` and set `src` in
-  `product.ts`. Brief: [docs/06-photography-brief.md](docs/06-photography-brief.md).
+- **AI product visualisations need real-photo replacement before launch.** The
+  hero, gallery, refrigerator and scroll-story images are wired from
+  `public/images/`. They are design assets, not measured product evidence.
+  Brief: [docs/06-photography-brief.md](docs/06-photography-brief.md).
 - **No ordering.** The buy section says so plainly instead of staging a fake
   checkout. Design for the real thing:
   [docs/specs](docs/specs/2026-09-04-direct-commerce-design.md).
 - **No contact details.** `site.ts` has `contact` fields set to `null`. A
   storefront with no reachable contact is rejected by ad platforms and payment
   gateways, and it is the first thing a cautious buyer looks for.
-- **The hero illustration draws four independent tiers.** The supplier's flyers
-  show a serpentine cascade — loaded at the top, one egg presented at a chute at
-  the bottom. The current drawing was chosen on aesthetic grounds knowing it is
-  inaccurate. Mechanism copy is kept to wording that does not assert a specific
-  routing. Resolve before launch.
+- **Physical behaviour still needs a real-unit check.** The inaccurate rail
+  illustration has been removed. The current story uses matched AI frames based
+  on supplier material; use real footage or photography before treating the
+  sequence as performance evidence.
 - **No reviews.** The ratings that used to be here belonged to a marketplace
   listing and could not honestly be presented as ours. They come back when
   there are real EggFlow reviews.

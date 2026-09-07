@@ -40,9 +40,10 @@ Not code. Nothing in Phase 1 reaches its full value without these.
    "not verified yet" rows become real values automatically. This is the
    highest-value single action available — shelf fit is the top unanswered
    question and the top return reason.
-2. **Generate or shoot the images** per
-   [06-photography-brief.md](06-photography-brief.md). Note which need to be real
-   photographs.
+2. **Replace the AI design assets with real product photography** per
+   [06-photography-brief.md](06-photography-brief.md). The generated hero,
+   gallery, refrigerator and story frames are integrated for design review;
+   purchase-decision images and mechanism proof still need the physical unit.
 3. **Fill in contact and manufacturer details.** Launch blockers.
 4. **Confirm the supplier relay channel** and a realistic dispatch window, so
    `/shipping` can carry a number instead of a hedge.

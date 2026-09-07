@@ -2,6 +2,8 @@
 
 Six images generated with the built-in imagegen tool using the user-supplied product flyers. The first white studio image established the visual reference for the remaining five. No page code or product facts were changed.
 
+On 2026-09-07, three matched square story frames were added under `public/images/story/`: `ready.png`, `take.png`, and `next.png`. They use one fixed close camera and are intended for the dark scroll sequence. These are AI visualizations of the supplier-described gravity action, not recorded proof of physical performance.
+
 ## Placement
 
 Public URLs below map directly to files under `public/images/`.
@@ -50,4 +52,3 @@ Use case: product-mockup. The input image is the exact product identity referenc
 ### detail
 
 Use case: product-mockup. The input image is the exact product identity reference. Preserve its geometry, proportions, narrow single-file egg channels, four levels consisting of open top and THREE long side windows, TWO small end windows, and ONE bottom curved dispensing chute with stop lip. Preserve realistic brown eggs and satin-matte injection moulded plastic. Premium photographic realism, soft diffused daylight, warm neutral cream/oat palette, realistic contact shadows. No text, logos, watermarks, dimensions, graphic overlays, collage, extra tiers, invented components or eggs intersecting plastic. Create a square macro detail photograph focusing on this WHITE product's single bottom curved dispensing chute: foremost brown egg rests behind the raised stop lip and second egg is behind on ramp. Keep reference chute geometry and sidewalls, show part of lowest side window at upper left and plastic seam. Crop the upper rack deliberately outside frame. Low three-quarter close camera, realistic textured eggshell, smooth satin plastic, soft cream studio backdrop, crisp foreground egg and curved lip with gentle depth falloff. No hands, arrows or movement effects.
-
