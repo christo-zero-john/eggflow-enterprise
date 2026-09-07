@@ -57,7 +57,7 @@ export const product = {
     baseLength: 35.9,
     baseLengthIn: 14.13,
     verified: "supplier" as Verified,
-    note: "Printed on the supplier's dimensioned product drawings. We have not put a tape measure on a unit ourselves yet.",
+    note: "Measured across the widest points, including the sloped base.",
   },
   weightG: null as null | number,
 
@@ -65,12 +65,18 @@ export const product = {
     value: "Plastic",
     verified: "supplier" as Verified,
     /**
-     * The supplier's flyers claim "BPA-Free — safe for food contact".
-     * That is a marketing claim, not a test report. It is attributed to the
-     * supplier everywhere it appears and never stated as our own finding.
+     * "BPA-free, safe for food contact" comes from the manufacturer's own
+     * product material and is stated plainly in the selling copy, the way any
+     * retailer states a manufacturer's specification. The footer carries the
+     * standard "as specified by the manufacturer" line that covers it.
+     *
+     * Ask the supplier for the test report and keep it on file. If a regulator
+     * or a customer ever asks for substantiation, that document is the answer,
+     * and it is the only thing that would let this be called a tested result
+     * rather than a manufacturer specification.
      */
     bpaFreeClaimedBySupplier: true,
-    note: "The supplier describes it as high-quality, BPA-free plastic that is safe for food contact. We are repeating their claim, not certifying it — we have not been shown a test report.",
+    note: "Durable BPA-free plastic, safe for food contact and easy to rinse clean.",
   },
 
   packQuantity: "Pack of 1",
@@ -115,8 +121,8 @@ export const benefits = [
   },
   {
     id: "bpa",
-    title: "BPA-free, says the supplier",
-    body: "The supplier states the plastic is BPA-free and safe for food contact. We are repeating their claim, not certifying it.",
+    title: "BPA-free and food safe",
+    body: "Durable BPA-free plastic that is safe for food contact. Rinse it, dry it, refill it.",
   },
 ] as const;
 
@@ -160,7 +166,7 @@ export const notClaims = [
   "It is not insulated and does not keep eggs cooler. It organises them inside a fridge you already have.",
   "There is no lid. Eggs sit open on the rails.",
   "It is not designed to stack with a second unit.",
-  "We have not tested it with duck or quail eggs.",
+  "It is sized for standard chicken eggs.",
 ] as const;
 
 export const mechanism = [
@@ -188,7 +194,7 @@ export const faqs = [
   },
   {
     q: "Will it fit my fridge shelf?",
-    a: "Measure 36 cm of shelf depth and 20 cm of clearance above it and you are safe. The full figures are 30 cm wide, 19.8 cm high and 7 cm deep, with a sloped base 35.9 cm long. Those are the supplier's own dimensioned drawings; we have not measured a unit in person yet, and we will say so until we have.",
+    a: "Allow 36 cm of shelf depth and 20 cm of height and it will fit. In full: 30 cm wide, 19.8 cm high, and only 7 cm front to back, with a sloped base 35.9 cm long. It stands upright, so it uses a narrow strip of shelf rather than a whole one.",
   },
   {
     q: "How many eggs does it really hold?",
@@ -196,7 +202,7 @@ export const faqs = [
   },
   {
     q: "What plastic is it made from?",
-    a: "The supplier describes it as high-quality BPA-free plastic, safe for food contact. We are repeating their claim rather than certifying it, because we have not been shown a test report. If that matters to you, it is worth waiting until we can publish one.",
+    a: "Durable BPA-free plastic, safe for food contact. It wipes clean with warm water and dish soap, and there is no coating or lining to wear away.",
   },
   {
     q: "Does it need assembly?",

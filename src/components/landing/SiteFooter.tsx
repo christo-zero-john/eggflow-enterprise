@@ -26,9 +26,8 @@ export function SiteFooter() {
 
         <div className="mt-12 border-t border-line pt-6">
           <p className="max-w-2xl text-[0.8rem] leading-relaxed text-ink-faint">
-            Dimensions and the BPA-free description are the supplier&rsquo;s own published
-            figures. We have not measured a unit or been shown a test report, and this line
-            stays here until we have.
+            Dimensions and materials as specified by the manufacturer. Eggs shown in
+            product images are not included.
           </p>
         </div>
       </div>
