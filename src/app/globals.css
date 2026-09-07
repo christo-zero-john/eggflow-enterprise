@@ -1,0 +1,170 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   EggFlow — design tokens
+   --------------------------------------------------------------------------
+   Direction: moulded pulp. The reference is not a fridge and not a farmhouse
+   kitchen — it is the grey-beige recycled fibre of an egg carton. Warm, matte,
+   slightly coarse, entirely unglamorous.
+
+   One saturated colour exists on this site: yolk. It appears only on things
+   you can act on. Everything else is carton, shell and ink.
+   ========================================================================== */
+
+@theme {
+  /* ground and surface */
+  --color-carton: #e8e3d7; /* page ground — moulded pulp fibre        */
+  --color-shell: #f6f2e9; /* raised surfaces, cards, table stripes   */
+  --color-shell-deep: #ddd6c6; /* recessed wells, image mats              */
+
+  /* ink */
+  --color-ink: #201b15; /* headings and body — 14.9:1 on carton    */
+  --color-ink-soft: #665c50; /* secondary text — 5.2:1 on carton        */
+  --color-ink-faint: #94897a; /* meta only, never body copy              */
+
+  /* the one saturated colour */
+  --color-yolk: #e8a33d; /* actions only. never a background band.  */
+  --color-yolk-deep: #d18f2a; /* hover                                   */
+  --color-yolk-wash: #f6e6c8; /* the quiet tint, for badges              */
+
+  /* structure */
+  --color-line: #d5cdbc;
+  --color-line-strong: #b9ae99;
+
+  /* type */
+  --font-display: var(--font-bricolage), "Trebuchet MS", sans-serif;
+  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+
+  --text-display: clamp(2.5rem, 1.6rem + 3.4vw, 4.6rem);
+  --text-h2: clamp(1.9rem, 1.3rem + 2.6vw, 3.4rem);
+  --text-h3: clamp(1.15rem, 1.05rem + 0.45vw, 1.4rem);
+  --text-lead: clamp(1.1rem, 1.02rem + 0.5vw, 1.35rem);
+
+  /* the tilt — the real angle of the rails, used as a structural device */
+  --tilt: 5.5deg;
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+
+:root {
+  color-scheme: light;
+  /* The sticky header's height. Any element that pins to the top of the
+     viewport must subtract this, or the header crops it. */
+  --header-h: 58px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Anchor targets must clear the sticky header. */
+[id] {
+  scroll-margin-top: calc(var(--header-h) + 1rem);
+}
+
+body {
+  background-color: var(--color-carton);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Bricolage carries the personality. It is set tight, wide and heavy, and is
+   never used below 1.1rem — at small sizes its quirks read as noise. */
+.font-display {
+  font-variation-settings: "wdth" 108, "opsz" 48;
+  letter-spacing: -0.028em;
+  line-height: 0.94;
+  text-wrap: balance;
+}
+
+/* Numbers in specs, prices and counts must not change width as they change. */
+.tnum {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+::selection {
+  background: var(--color-yolk);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* On the dark band, the ink outline would be invisible. */
+.on-ink :focus-visible {
+  outline-color: var(--color-yolk);
+}
+
+/* --------------------------------------------------------------------------
+   The tilt, as a structural device
+   --------------------------------------------------------------------------
+   Every rule that separates a section descends left to right at the angle the
+   rails actually sit at, and terminates in a dot at the low end. It is the
+   mechanism, drawn: things travel down the slope and gather at the front.
+   -------------------------------------------------------------------------- */
+
+@utility rail {
+  position: relative;
+  height: 1px;
+  border: 0;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-line-strong) 18%,
+    var(--color-line-strong) 100%
+  );
+  transform: rotate(0.4deg);
+  transform-origin: left center;
+}
+
+@utility rail-dot {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 9px;
+  height: 11px;
+  margin-top: -5.5px;
+  border-radius: 50% 50% 50% 50% / 58% 58% 42% 42%;
+  background: var(--color-yolk);
+}
+
+/* --------------------------------------------------------------------------
+   An egg. Used in the demo and the scroll sequence.
+   Not a circle — the asymmetry is what makes it read as an egg at 20px.
+   -------------------------------------------------------------------------- */
+
+@utility egg {
+  border-radius: 50% 50% 50% 50% / 58% 58% 42% 42%;
+  background: linear-gradient(150deg, #f6dfae 0%, var(--color-yolk) 55%, #c98a26 100%);
+  box-shadow: inset 0 -1px 2px rgb(120 80 10 / 0.25);
+}
+
+/* --------------------------------------------------------------------------
+   Motion
+   --------------------------------------------------------------------------
+   There is exactly one piece of motion on this page that the reader did not
+   ask for: the mechanism sequence, which is scroll-linked and is the product
+   explaining itself. Nothing fades up because it entered the viewport.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
