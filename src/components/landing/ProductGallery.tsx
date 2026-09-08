@@ -6,16 +6,21 @@ import { product } from "@/lib/product";
 import { Cta, CtaRow } from "./Cta";
 
 const views = [
-  { id: "white", label: "White", src: "/images/gallery/white.png", alt: "White four-tier rolling egg shelf filled with brown eggs", fit: "contain" },
-  { id: "charcoal", label: "Charcoal", src: "/images/gallery/charcoal.png", alt: "Charcoal four-tier rolling egg shelf filled with brown eggs", fit: "contain" },
-  { id: "detail", label: "Outlet", src: "/images/detail.png", alt: "Close view of the curved egg outlet", fit: "cover" },
-  { id: "fridge", label: "In fridge", src: "/images/lifestyle/fridge.png", alt: "White egg shelf in a refrigerator", fit: "cover" },
+  { id: "studio", label: "Studio", alt: "four-tier rolling egg shelf filled with brown eggs" },
+  { id: "detail", label: "Outlet", alt: "egg shelf dispensing chute close-up" },
+  { id: "fridge", label: "In fridge", alt: "egg shelf inside a refrigerator" },
+  { id: "kitchen", label: "Kitchen", alt: "egg shelf on a kitchen counter" },
+  { id: "loading", label: "Loading", alt: "egg shelf with a hand loading an egg into the top" },
+  { id: "empty", label: "Empty", alt: "empty egg shelf showing its open tiers" },
+  { id: "hero", label: "Wide view", alt: "egg shelf on a cream stone surface" },
 ] as const;
 
 export function ProductGallery() {
   const [selected, setSelected] = useState(0);
+  const [colour, setColour] = useState<(typeof product.colors)[number]>(product.colors[0]);
   const stripRef = useRef<HTMLDivElement>(null);
   const view = views[selected];
+  const imageSrc = (id: string) => `/images/product/${colour.id}/${id}.png`;
 
   /** Wraps at both ends, so the arrows never dead-end. */
   function step(delta: number) {
@@ -30,23 +35,23 @@ export function ProductGallery() {
   }
 
   return (
-    <div className="grid items-center gap-10 lg:grid-cols-[0.84fr_1.16fr] lg:gap-16">
+    <div className="product-gallery grid items-center gap-10">
       <div className="max-w-lg">
         <p className="text-sm font-semibold uppercase tracking-[0.16em] text-ink-soft">Two colours</p>
         <h2 id="colours-heading" className="mt-4 font-display text-h2 font-bold">Choose your finish.</h2>
         <p className="mt-5 max-w-[40ch] text-lead text-ink-soft">White or charcoal. The same compact design.</p>
 
         <div className="mt-7 flex gap-3" aria-label="Choose product colour">
-          {product.colors.map((colour, index) => (
+          {product.colors.map((option) => (
             <button
-              key={colour.id}
+              key={option.id}
               type="button"
-              aria-pressed={selected === index}
-              onClick={() => setSelected(index)}
-              className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-full border px-4 py-2 font-semibold transition-colors ${selected === index ? "border-ink bg-shell" : "border-line-strong hover:border-ink"}`}
+              aria-pressed={colour.id === option.id}
+              onClick={() => setColour(option)}
+              className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-full border px-4 py-2 font-semibold transition-colors ${colour.id === option.id ? "border-ink bg-shell" : "border-line-strong hover:border-ink"}`}
             >
-              <span className="h-7 w-7 rounded-full border border-line-strong" style={{ backgroundColor: colour.hex }} aria-hidden />
-              {colour.label}
+              <span className="h-7 w-7 rounded-full border border-line-strong" style={{ backgroundColor: option.hex }} aria-hidden />
+              {option.label}
             </button>
           ))}
         </div>
@@ -55,46 +60,45 @@ export function ProductGallery() {
         <div className="mt-7"><CtaRow><Cta href="#buy">Buy now &mdash; {product.price.display}</Cta></CtaRow></div>
       </div>
 
-      <div className="min-w-0">
+      <div className="gallery-media min-w-0">
         {/* Main view, with the arrows sitting on it. */}
-        <figure className="gallery-main group relative mx-auto aspect-square w-full max-w-[520px] overflow-hidden rounded-[20px] bg-shell">
+        <figure className="gallery-main group relative aspect-square w-full overflow-hidden rounded-[20px] bg-shell">
           <Image
-            key={view.src}
-            src={view.src}
-            alt={view.alt}
+            key={imageSrc(view.id)}
+            src={imageSrc(view.id)}
+            alt={`${colour.label} ${view.alt}`}
             fill
-            sizes="(min-width: 1024px) 520px, 92vw"
-            className={view.fit === "contain" ? "object-contain" : "object-cover"}
+            sizes="(min-width: 1440px) 640px, (min-width: 1024px) 45vw, 92vw"
+            className="object-contain"
           />
 
           <Arrow direction="prev" onClick={() => step(-1)} />
           <Arrow direction="next" onClick={() => step(1)} />
 
-          <figcaption className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-ink/70 px-3 py-1 text-xs font-medium text-shell">
-            <span className="tnum">{selected + 1}</span> / {views.length} &middot; {view.label}
+          <figcaption aria-live="polite" aria-atomic="true" className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-ink/70 px-3 py-1 text-xs font-medium text-shell">
+            <span className="tnum">{selected + 1}</span> / {views.length} &middot; {colour.label} &middot; {view.label}
           </figcaption>
         </figure>
 
-        {/* Thumbnails run under the main view and scroll sideways when they
-            do not fit, rather than shrinking to unreadable squares. */}
+        {/* Desktop shares one height between the main image and seven rows. */}
         <div
           ref={stripRef}
-          className="gallery-strip mx-auto mt-4 flex max-w-[520px] gap-3 overflow-x-auto pb-1"
+          className="gallery-strip"
           role="group"
-          aria-label="Choose product view"
+          aria-label={`Choose ${colour.label.toLowerCase()} product view`}
         >
           {views.map((item, index) => (
             <button
-              key={item.id}
+              key={`${colour.id}-${item.id}`}
               type="button"
               aria-pressed={selected === index}
-              aria-label={`Show ${item.label} view`}
+              aria-label={`Show ${colour.label.toLowerCase()} ${item.label.toLowerCase()} view`}
               onClick={() => setSelected(index)}
-              className={`relative aspect-square w-[88px] shrink-0 cursor-pointer overflow-hidden rounded-[12px] border-2 bg-shell transition-[border-color,opacity,transform] duration-150 hover:-translate-y-px sm:w-[104px] ${
+              className={`gallery-thumb relative cursor-pointer overflow-hidden rounded-[10px] border-2 bg-shell transition-[border-color,opacity] duration-150 ${
                 selected === index ? "border-yolk opacity-100" : "border-transparent opacity-65 hover:opacity-100"
               }`}
             >
-              <Image src={item.src} alt="" fill sizes="104px" className={item.fit === "contain" ? "object-contain" : "object-cover"} />
+              <Image src={imageSrc(item.id)} alt="" fill sizes="(min-width: 1024px) 84px, 72px" className="object-contain" />
             </button>
           ))}
         </div>

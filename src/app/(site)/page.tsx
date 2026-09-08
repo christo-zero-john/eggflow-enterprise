@@ -17,7 +17,7 @@ export default function LandingPage() {
       <MechanismScroll />
       <SizeFit />
 
-      <ViewportSection id="colours" labelledBy="colours-heading">
+      <ViewportSection id="colours" labelledBy="colours-heading" className="gallery-section">
         <ProductGallery />
       </ViewportSection>
 

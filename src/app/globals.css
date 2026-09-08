@@ -96,8 +96,7 @@ html {
  * on short viewports — the box kept its width and stopped being a square — so
  * the width is capped to the same figure.
  */
-.hero-product-frame,
-.gallery-main {
+.hero-product-frame {
   max-height: min(520px, calc(100dvh - 176px));
   max-width: min(520px, calc(100dvh - 176px));
 }
@@ -256,8 +255,19 @@ html {
   }
 }
 
-/* The thumbnail strip scrolls sideways without showing a bar. */
+.gallery-media {
+  width: 100%;
+  max-width: 640px;
+  margin-inline: auto;
+}
+
+/* Horizontal on small screens; seven equal rows beside the image on desktop. */
 .gallery-strip {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  padding-bottom: 4px;
+  overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
   scroll-snap-type: x proximity;
@@ -270,6 +280,52 @@ html {
 
 .gallery-strip > * {
   scroll-snap-align: start;
+}
+
+.gallery-thumb {
+  flex: 0 0 72px;
+  aspect-ratio: 1;
+}
+
+@media (min-width: 1024px) {
+  .gallery-section .viewport-section__inner {
+    width: min(100%, 1440px);
+    padding-inline: clamp(32px, 4vw, 64px);
+  }
+
+  .product-gallery {
+    grid-template-columns: minmax(280px, 0.65fr) minmax(0, 1.35fr);
+    gap: clamp(28px, 3vw, 48px);
+  }
+
+  .gallery-media {
+    /* One square plus a rail exactly one-seventh of its height, minus gaps. */
+    --gallery-gap: 10px;
+    max-width: min(744px, calc((100dvh - 176px) * 8 / 7 + 8px));
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(44px, 1fr);
+    align-items: stretch;
+    gap: 16px;
+    margin-right: 0;
+  }
+
+  .gallery-strip {
+    min-height: 0;
+    height: 100%;
+    display: grid;
+    grid-template-rows: repeat(7, minmax(0, 1fr));
+    gap: var(--gallery-gap);
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+
+  .gallery-thumb {
+    min-height: 0;
+    width: 100%;
+    aspect-ratio: auto;
+  }
 }
 
 .closing-section {
